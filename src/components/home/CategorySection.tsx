@@ -18,12 +18,12 @@ interface CategoryItem {
 export default function CategorySection() {
   const categories: CategoryItem[] = [
     {
-      id: 'cosmetiques',
-      title: 'COSMÉTIQUES',
-      subtitle: 'Prenez soin de votre peau avec élégance.',
-      image: '/images/editorial/cat-cosmetiques.jpg',
-      href: '#cosmetiques',
-      count: 'Sérums & Soins Visage',
+      id: 'nouveautes',
+      title: 'NOUVEAUTÉS',
+      subtitle: 'Les dernières références de notre sélection.',
+      image: '/images/catalogue/produit-02.jpg',
+      href: '#nouveautes',
+      count: 'Fraîchement arrivé',
     },
     {
       id: 'soins-capillaires',

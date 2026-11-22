@@ -1,8 +1,6 @@
-export type ProductCategory = 
-  | 'cosmetiques'
+export type ProductCategory =
   | 'soins-capillaires'
-  | 'perruques-meches'
-  | 'accessoires';
+  | 'perruques-meches';
 
 export interface Product {
   id: string;

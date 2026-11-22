@@ -7,16 +7,16 @@ import ProductGrid from '@/components/products/ProductGrid';
 import Button from '@/components/ui/Button';
 import { BRAND_CONFIG } from '@/lib/constants';
 
-type FilterKey = 'tous' | ProductCategory;
+type FilterKey = 'tous' | 'nouveautes' | 'coups-de-coeur' | ProductCategory;
 
 type SortKey = 'featured' | 'price-asc' | 'price-desc' | 'name' | 'newest';
 
 const FILTERS: { key: FilterKey; label: string }[] = [
   { key: 'tous', label: 'Tous les produits' },
-  { key: 'cosmetiques', label: 'Cosmétiques' },
+  { key: 'coups-de-coeur', label: 'Coups de cœur' },
+  { key: 'nouveautes', label: 'Nouveautés' },
   { key: 'soins-capillaires', label: 'Soins capillaires' },
   { key: 'perruques-meches', label: 'Perruques & mèches' },
-  { key: 'accessoires', label: 'Accessoires' },
 ];
 
 const SORTS: { key: SortKey; label: string }[] = [
@@ -39,7 +39,11 @@ export default function BoutiqueShop({ products, initialCategory = 'tous' }: Bou
   const [sortOpen, setSortOpen] = useState(false);
 
   const counts = useMemo(() => {
-    const result: Record<string, number> = { tous: products.length };
+    const result: Record<string, number> = {
+      tous: products.length,
+      nouveautes: products.filter((p) => p.is_new).length,
+      'coups-de-coeur': products.filter((p) => p.is_featured).length,
+    };
     products.forEach((p) => {
       result[p.category_id] = (result[p.category_id] || 0) + 1;
     });
@@ -49,7 +53,11 @@ export default function BoutiqueShop({ products, initialCategory = 'tous' }: Bou
   const visibleProducts = useMemo(() => {
     const q = query.trim().toLowerCase();
     let list = products.filter((p) => {
-      const categoryMatch = activeFilter === 'tous' || p.category_id === activeFilter;
+      const categoryMatch =
+        activeFilter === 'tous' ||
+        (activeFilter === 'nouveautes' && p.is_new) ||
+        (activeFilter === 'coups-de-coeur' && p.is_featured) ||
+        p.category_id === activeFilter;
       const searchMatch =
         !q ||
         p.name.toLowerCase().includes(q) ||

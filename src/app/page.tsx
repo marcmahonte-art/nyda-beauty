@@ -15,7 +15,7 @@ import { getProducts } from '@/lib/products';
 export default async function HomePage() {
   const allProducts = await getProducts();
 
-  const cosmetiques = allProducts.filter((p) => p.category_id === 'cosmetiques');
+  const nouveautes = allProducts.filter((p) => p.is_new);
   const soinsCapillaires = allProducts.filter((p) => p.category_id === 'soins-capillaires');
   const perruques = allProducts.filter((p) => p.category_id === 'perruques-meches');
 
@@ -81,23 +81,23 @@ export default async function HomePage() {
       {/* 5. Editorial Campaign — Beauty in Every Detail */}
       <EditorialCampaign />
 
-      {/* 6. Section Dédiée : Cosmétiques & Soins du Visage */}
-      <section id="cosmetiques" className="w-full bg-white py-20 sm:py-24 border-b border-[#E9DFD9]/50">
+      {/* 6. Section Dédiée : Nouveautés */}
+      <section id="nouveautes" className="w-full bg-white py-20 sm:py-24 border-b border-[#E9DFD9]/50">
         <Container>
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <SectionHeading
               alignment="left"
-              eyebrow="RITUEL DU VISAGE"
-              title="Cosmétiques & Teint Divin"
-              subtitle="Des sérums illuminants et crèmes hydratantes formulés pour sublimer l'éclat des peaux d'Afrique."
+              eyebrow="FRAÎCHEMENT ARRIVÉ"
+              title="Nouveautés de la boutique"
+              subtitle="Les dernières références ajoutées à notre sélection de soins, colorations et coiffants capillaires."
             />
             <div className="hidden md:block">
               <span className="text-xs uppercase tracking-widest text-[#8A7168] font-medium">
-                {cosmetiques.length} soins d&apos;exception
+                {nouveautes.length} nouvelles références
               </span>
             </div>
           </div>
-          <ProductGrid products={cosmetiques} columns={4} />
+          <ProductGrid products={nouveautes} columns={4} />
         </Container>
       </section>
 

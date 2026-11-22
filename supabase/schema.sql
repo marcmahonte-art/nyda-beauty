@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS public.products (
   name TEXT NOT NULL,
   slug TEXT NOT NULL UNIQUE,
   description TEXT NOT NULL,
-  category_id TEXT NOT NULL CHECK (category_id IN ('cosmetiques', 'soins-capillaires', 'perruques-meches', 'accessoires')),
+  category_id TEXT NOT NULL CHECK (category_id IN ('soins-capillaires', 'perruques-meches')),
   category_name TEXT NOT NULL,
   price NUMERIC(12, 0) NOT NULL, -- Prix en FCFA (sans décimales)
   sale_price NUMERIC(12, 0) NULL,

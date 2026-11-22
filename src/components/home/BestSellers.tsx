@@ -16,10 +16,8 @@ export default function BestSellers({ products }: BestSellersProps) {
 
   const filterTabs = [
     { id: 'all', label: 'Tous les essentiels' },
-    { id: 'cosmetiques', label: 'Cosmétiques' },
     { id: 'soins-capillaires', label: 'Soins capillaires' },
     { id: 'perruques-meches', label: 'Perruques & Mèches' },
-    { id: 'accessoires', label: 'Accessoires' },
   ];
 
   const filteredProducts = useMemo(() => {

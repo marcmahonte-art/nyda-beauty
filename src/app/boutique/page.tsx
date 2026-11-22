@@ -13,7 +13,7 @@ import type { ProductCategory } from '@/types';
 export const metadata: Metadata = {
   title: 'Boutique — Tous les produits | NYDA BEAUTY HAIR',
   description:
-    'Découvrez toute la collection NYDA BEAUTY HAIR : cosmétiques, soins capillaires, perruques HD lace, mèches vierges et accessoires de luxe à Abidjan.',
+    'Découvrez toute la collection NYDA BEAUTY HAIR : colorations, shampoings, masques, gels coiffants et colles pour perruques à Abidjan.',
   openGraph: {
     title: 'Boutique NYDA BEAUTY HAIR — Tous les produits',
     description: 'Cosmétiques, soins capillaires, perruques et mèches de luxe en Côte d’Ivoire.',
@@ -23,10 +23,8 @@ export const metadata: Metadata = {
 };
 
 const VALID_CATEGORIES: ProductCategory[] = [
-  'cosmetiques',
   'soins-capillaires',
   'perruques-meches',
-  'accessoires',
 ];
 
 export default async function BoutiquePage({
@@ -63,7 +61,7 @@ export default async function BoutiquePage({
               </h1>
 
               <p className="font-sans text-sm sm:text-base text-[#8A7168] leading-relaxed max-w-xl font-light">
-                Tout nos essentiels beauté réunis au même endroit : soins du visage, traitements capillaires, perruques HD lace et accessoires choisis avec soin pour sublimer votre elegance.
+                Tous nos essentiels capillaires réunis au même endroit : colorations, shampoings, soins réparateurs, gels coiffants et adhésifs pour perruques sélectionnés avec soin.
               </p>
 
               <div className="pt-2 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs text-[#8A7168]">
