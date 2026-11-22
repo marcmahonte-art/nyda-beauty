@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { Sparkles, Check, Clock, MessageCircle, Scissors, Heart, ShieldCheck, ArrowRight } from 'lucide-react';
+import { Sparkles, Check, Clock, Scissors, Heart, ShieldCheck, ArrowRight } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import Container from '@/components/ui/Container';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Button from '@/components/ui/Button';
@@ -73,7 +74,7 @@ export default function ServicesPage() {
                 </a>
                 <a href={waSalonUrl} target="_blank" rel="noopener noreferrer">
                   <Button variant="whatsapp" size="md" className="gap-2 w-full sm:w-auto">
-                    <MessageCircle className="w-4 h-4 fill-current" />
+                    <WhatsAppIcon className="w-4 h-4 text-white" />
                     <span>RÉSERVER SUR WHATSAPP</span>
                   </Button>
                 </a>
@@ -284,7 +285,7 @@ export default function ServicesPage() {
           <div className="pt-2">
             <a href={waSalonUrl} target="_blank" rel="noopener noreferrer">
               <Button variant="primary" size="lg" className="gap-2.5 shadow-md hover:shadow-xl">
-                <MessageCircle className="w-5 h-5 fill-[#25D366] text-[#25D366]" />
+                <WhatsAppIcon className="w-5 h-5 text-[#25D366]" />
                 <span>ÉCRIRE AU SALON SUR WHATSAPP</span>
               </Button>
             </a>

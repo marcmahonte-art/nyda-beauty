@@ -1,7 +1,8 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { Sparkles, Truck, ShieldCheck, MessageCircle, ArrowRight } from 'lucide-react';
+import { Sparkles, Truck, ShieldCheck, ArrowRight } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import BoutiqueShop from '@/components/boutique/BoutiqueShop';
@@ -73,7 +74,7 @@ export default async function BoutiquePage({
                   <ShieldCheck className="w-4 h-4 text-[#B99C91]" /> Produits sélectionnés
                 </span>
                 <span className="inline-flex items-center gap-2">
-                  <MessageCircle className="w-4 h-4 text-[#B99C91]" /> Conseil sur WhatsApp
+                  <WhatsAppIcon className="w-4 h-4 text-[#25D366]" /> Conseil sur WhatsApp
                 </span>
               </div>
             </div>
@@ -111,7 +112,7 @@ export default async function BoutiquePage({
           </p>
           <a href={waUrl} target="_blank" rel="noopener noreferrer">
             <Button variant="primary" size="lg" className="gap-2.5 shadow-md hover:shadow-xl">
-              <MessageCircle className="w-5 h-5 fill-[#25D366] text-[#25D366]" />
+              <WhatsAppIcon className="w-5 h-5 text-[#25D366]" />
               <span>ÉCRIRE À NYDA SUR WHATSAPP</span>
               <ArrowRight className="w-4 h-4" />
             </Button>

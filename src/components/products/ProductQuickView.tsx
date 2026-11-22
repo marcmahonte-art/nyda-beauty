@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { X, Check, Plus, Minus, MessageCircle, Star } from 'lucide-react';
+import { X, Check, Plus, Minus, Star } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useCart } from '@/lib/cart-context';
 import { formatPriceFCFA } from '@/lib/utils';
 import { BRAND_CONFIG } from '@/lib/constants';
@@ -207,7 +208,7 @@ export default function ProductQuickView() {
               rel="noopener noreferrer"
               className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white py-3 px-4 rounded text-xs uppercase tracking-wider font-medium transition-colors"
             >
-              <MessageCircle className="w-4 h-4 fill-current" />
+              <WhatsAppIcon className="w-4 h-4 text-white" />
               <span>Commander directement via WhatsApp</span>
             </a>
           </div>

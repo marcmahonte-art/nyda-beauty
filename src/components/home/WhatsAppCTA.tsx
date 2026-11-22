@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { MessageCircle } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import { BRAND_CONFIG } from '@/lib/constants';
@@ -34,7 +34,7 @@ export default function WhatsAppCTA() {
               size="lg"
               className="gap-3 shadow-md hover:shadow-xl active:scale-95"
             >
-              <MessageCircle className="w-5 h-5 fill-[#25D366] text-[#25D366]" />
+              <WhatsAppIcon className="w-5 h-5 text-[#25D366]" />
               <span>CONTACTER NYDA SUR WHATSAPP</span>
             </Button>
           </a>

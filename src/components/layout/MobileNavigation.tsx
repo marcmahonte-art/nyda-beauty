@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { X, MessageCircle, ArrowRight } from 'lucide-react';
+import { X, ArrowRight } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { BRAND_CONFIG } from '@/lib/constants';
 import { InstagramIcon, FacebookIcon } from '@/components/ui/SocialIcons';
 
@@ -87,7 +88,7 @@ export default function MobileNavigation({
             rel="noopener noreferrer"
             className="w-full flex items-center justify-center gap-2.5 bg-[#25D366] text-white py-3 px-4 rounded text-xs uppercase tracking-wider font-medium hover:bg-[#20ba5a] transition-colors shadow-sm"
           >
-            <MessageCircle className="w-4 h-4 fill-current" />
+            <WhatsAppIcon className="w-4 h-4 text-white" />
             <span>Discuter sur WhatsApp</span>
           </a>
 

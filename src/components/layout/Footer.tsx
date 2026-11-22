@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
-import { MessageCircle, Mail, MapPin } from 'lucide-react';
+import { Mail, MapPin } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { BRAND_CONFIG } from '@/lib/constants';
 import { InstagramIcon, FacebookIcon } from '@/components/ui/SocialIcons';
 
@@ -125,7 +126,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 text-sm text-[#25D366] hover:text-[#56f590] transition-colors"
               >
-                <MessageCircle className="w-4 h-4 fill-current shrink-0" />
+                <WhatsAppIcon className="w-4 h-4 shrink-0" />
                 <span>WhatsApp : {BRAND_CONFIG.displayPhone}</span>
               </a>
               <a

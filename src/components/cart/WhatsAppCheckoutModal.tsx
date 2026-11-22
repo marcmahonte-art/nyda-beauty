@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, MessageCircle, CheckCircle2, ShieldCheck, MapPin, Phone, User, CreditCard } from 'lucide-react';
+import { X, CheckCircle2, ShieldCheck, MapPin, Phone, User, CreditCard } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useCart } from '@/lib/cart-context';
 import { CheckoutFormData, PaymentMethod } from '@/types';
 import { formatPriceFCFA, generateOrderRef, formatWhatsAppMessage } from '@/lib/utils';
@@ -161,7 +162,7 @@ export default function WhatsAppCheckoutModal() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-[#25D366] text-white px-6 py-3.5 rounded text-xs uppercase tracking-wider font-semibold shadow hover:bg-[#20ba5a] transition-colors"
             >
-              <MessageCircle className="w-4 h-4 fill-current" />
+              <WhatsAppIcon className="w-4 h-4 text-white" />
               <span>Ouvrir WhatsApp</span>
             </a>
             <div className="pt-4">
@@ -308,7 +309,7 @@ export default function WhatsAppCheckoutModal() {
                 isLoading={isSubmitting}
                 className="gap-2 font-semibold"
               >
-                <MessageCircle className="w-5 h-5 fill-current" />
+                <WhatsAppIcon className="w-5 h-5 text-white" />
                 <span>Envoyer ma commande sur WhatsApp</span>
               </Button>
 

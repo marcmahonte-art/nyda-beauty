@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Search, ShoppingBag, Menu, MessageCircle } from 'lucide-react';
+import { Search, ShoppingBag, Menu } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useCart } from '@/lib/cart-context';
 import { BRAND_CONFIG } from '@/lib/constants';
 import MobileNavigation from './MobileNavigation';
@@ -118,7 +119,7 @@ export default function Header() {
               aria-label="Nous contacter sur WhatsApp"
               title="Conseil WhatsApp direct"
             >
-              <MessageCircle className="w-5 h-5 stroke-[1.5]" />
+              <WhatsAppIcon className="w-5 h-5 text-[#25D366]" />
             </a>
 
             {/* Shopping Bag with Badge */}

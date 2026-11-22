@@ -2,7 +2,8 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Scissors, Sparkles, Heart, ShieldCheck, MapPin, Clock, MessageCircle } from 'lucide-react';
+import { ArrowRight, Scissors, Sparkles, Heart, ShieldCheck, MapPin, Clock } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import Container from '@/components/ui/Container';
 import Button from '@/components/ui/Button';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -59,7 +60,7 @@ export default function SalonPage() {
                 </a>
                 <a href={waUrl} target="_blank" rel="noopener noreferrer">
                   <Button variant="whatsapp" size="md" className="gap-2.5 w-full sm:w-auto">
-                    <MessageCircle className="w-4 h-4 stroke-[1.5]" />
+                    <WhatsAppIcon className="w-4 h-4 text-white" />
                     <span>PRENDRE RENDEZ-VOUS</span>
                   </Button>
                 </a>
@@ -203,7 +204,7 @@ export default function SalonPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <MessageCircle className="w-5 h-5 text-[#FCDFE1] shrink-0 mt-0.5 stroke-[1.5]" />
+                  <WhatsAppIcon className="w-5 h-5 text-[#FCDFE1] shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm text-white font-medium">Réservation</p>
                     <p className="text-sm text-[#E9DFD9] font-light">Sur WhatsApp : {BRAND_CONFIG.displayPhone}</p>
@@ -219,7 +220,7 @@ export default function SalonPage() {
               </p>
               <a href={waUrl} target="_blank" rel="noopener noreferrer">
                 <Button variant="whatsapp" size="lg" className="gap-2.5 w-full">
-                  <MessageCircle className="w-5 h-5 stroke-[1.5]" />
+                  <WhatsAppIcon className="w-5 h-5 text-white" />
                   <span>ÉCRIRE AU SALON SUR WHATSAPP</span>
                 </Button>
               </a>

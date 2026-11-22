@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { X, Calendar, Clock, User, Phone, MessageCircle, Sparkles, CheckCircle2 } from 'lucide-react';
+import { X, Calendar, Clock, User, Phone, Sparkles, CheckCircle2 } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { SalonServiceItem } from '@/lib/services';
 import { formatPriceFCFA } from '@/lib/utils';
 import { BRAND_CONFIG } from '@/lib/constants';
@@ -212,7 +213,7 @@ _Bonjour l'équipe NYDA BEAUTY HAIR, je souhaite réserver cette séance de coif
                 fullWidth
                 className="gap-2 font-semibold"
               >
-                <MessageCircle className="w-5 h-5 fill-current" />
+                <WhatsAppIcon className="w-5 h-5 text-white" />
                 <span>Réserver ce créneau sur WhatsApp</span>
               </Button>
 
