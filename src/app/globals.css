@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #1E1D1B;
+  --color-blush: #FCDFE1;
+  --color-ivory: #F8F4F0;
+  --color-champagne: #E9DFD9;
+  --color-dusty-nude: #B99C91;
+  --color-taupe: #8A7168;
+  --color-charcoal: #393431;
+
+  --font-display: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-sans: var(--font-dm-sans), "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Design system — discreet card shadow */
+@utility shadow-card {
+  box-shadow: 0 4px 20px rgba(30, 29, 27, 0.05);
+}
+
+:root {
+  --color-obsidian: #1E1D1B;
+  --color-blush: #FCDFE1;
+  --color-ivory: #F8F4F0;
+  --color-champagne: #E9DFD9;
+  --color-dusty-nude: #B99C91;
+  --color-taupe: #8A7168;
+  --color-white: #FFFFFF;
+  --color-charcoal: #393431;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #1E1D1B;
+  font-family: var(--font-dm-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F4F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #E9DFD9;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #B99C91;
+}
+
+/* Hide scrollbar for carousels */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -1,0 +1,540 @@
+import { Product, ProductCategory } from '@/types';
+import { getSupabase } from './supabase';
+
+export const INITIAL_PRODUCTS: Product[] = [
+  // COSMÉTIQUES
+  {
+    id: 'prod-cosm-1',
+    name: 'Sérum Éclat Infini Niacinamide & Rose',
+    slug: 'serum-eclat-infini-niacinamide-rose',
+    description: 'Un sérum concentré ultra-léger formulé pour unifier le teint, atténuer les taches d’hyperpigmentation et révéler l’éclat naturel des peaux noires et métissées.',
+    category_id: 'cosmetiques',
+    category_name: 'Cosmétiques',
+    price: 12500,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-1.jpg',
+      '/images/editorial/cat-cosmetiques.jpg',
+    ],
+    stock_quantity: 24,
+    is_featured: true,
+    is_new: false,
+    is_active: true,
+    benefits: [
+      'Unifie le teint et estompe les taches d’hyperpigmentation',
+      'Hydrate intensément sans fini gras ni brillance',
+      'Resserre les pores et affine le grain de peau',
+      'Apporte une luminosité naturelle et un effet « bonne mine » instantané',
+    ],
+    usage: 'Appliquez 3 à 4 gouttes matin et soir sur le visage et le cou préalablement nettoyés, avant votre crème hydratante.',
+    volume_or_size: '30 ml',
+    rating: 4.9,
+  },
+  {
+    id: 'prod-cosm-2',
+    name: 'Crème Hydratante Velours de Soie',
+    slug: 'creme-hydratante-velours-de-soie',
+    description: 'Une crème enveloppante enrichie en beurre de karité raffiné et acide hyaluronique pour nourrir intensément et protéger la barrière cutanée tout au long de la journée.',
+    category_id: 'cosmetiques',
+    category_name: 'Cosmétiques',
+    price: 10000,
+    sale_price: 9000,
+    images: [
+      '/images/products/client-product-2.jpg',
+      '/images/editorial/cat-cosmetiques.jpg',
+    ],
+    stock_quantity: 18,
+    is_featured: true,
+    is_new: false,
+    is_active: true,
+    benefits: [
+      'Hydratation longue durée 48h sans effet collant',
+      'Laisse la peau douce, souple et protégée des agressions extérieures',
+      'Excellente base de maquillage pour un fini satiné',
+    ],
+    usage: 'Masser délicatement sur l’ensemble du visage et du décolleté jusqu’à absorption complète.',
+    volume_or_size: '50 ml',
+    rating: 4.8,
+  },
+  {
+    id: 'prod-cosm-3',
+    name: 'Élixir Botanique Régénérant Nuit',
+    slug: 'elixir-botanique-regenerant-nuit',
+    description: 'Une synergie d’huiles précieuses végétales (jojoba, rose musquée, argan) conçue pour revitaliser la peau pendant le sommeil et réveiller un teint frais et reposé.',
+    category_id: 'cosmetiques',
+    category_name: 'Cosmétiques',
+    price: 14500,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-3.jpg',
+      '/images/editorial/cat-cosmetiques.jpg',
+    ],
+    stock_quantity: 15,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Favorise le renouvellement cellulaire nocturne',
+      'Restaure l’élasticité et la fermeté cutanée',
+      'Parfum délicat et apaisant propice à la détente',
+    ],
+    usage: 'Chauffez 3 gouttes au creux de vos mains et pressez doucement sur le visage le soir.',
+    volume_or_size: '30 ml',
+    rating: 5.0,
+  },
+  {
+    id: 'prod-cosm-4',
+    name: 'Brume Botanique Rafraîchissante à la Rose',
+    slug: 'brume-botanique-rafraichissante-rose',
+    description: 'Une brume aérienne gorgée d’eau florale de rose de Damas et d’aloé vera pour tonifier, hydrater et fixer le maquillage avec légèreté sous le climat tropical.',
+    category_id: 'cosmetiques',
+    category_name: 'Cosmétiques',
+    price: 7500,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-4.jpg',
+      '/images/editorial/cat-cosmetiques.jpg',
+    ],
+    stock_quantity: 30,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Apaise instantanément les sensations d’échauffement',
+      'Réveille l’éclat du teint à tout moment de la journée',
+      'Fixe le maquillage sans assécher la peau',
+    ],
+    usage: 'Vaporisez à 20 cm du visage les yeux fermés matin, soir ou au cours de la journée.',
+    volume_or_size: '100 ml',
+    rating: 4.7,
+  },
+
+  // SOINS CAPILLAIRES
+  {
+    id: 'prod-cap-1',
+    name: 'Traitement Réparateur Cheveux & Cuir Chevelu',
+    slug: 'traitement-reparateur-cheveux-cuir-chevelu',
+    description: 'Le soin culte NYDA BEAUTY HAIR pour restaurer la fibre capillaire fragilisée par les défrisages, colorations ou la chaleur, tout en apaisant le cuir chevelu.',
+    category_id: 'soins-capillaires',
+    category_name: 'Soins capillaires',
+    price: 15000,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-5.jpg',
+      '/images/editorial/cat-soins-capillaires.jpg',
+    ],
+    stock_quantity: 32,
+    is_featured: true,
+    is_new: false,
+    is_active: true,
+    benefits: [
+      'Répare les pointes fourchues et freine la casse',
+      'Stimule la pousse et renforce l’ancrage du cheveu',
+      'Formule riche en protéines de soie et kératine végétale',
+      'Adapté aux cheveux naturels, défrisés ou nattés',
+    ],
+    usage: 'À appliquer sur cheveux humides mèche par mèche après le shampoing. Laisser poser 20 à 30 minutes sous un bonnet chauffant puis rincer abondamment.',
+    volume_or_size: '250 ml',
+    rating: 5.0,
+  },
+  {
+    id: 'prod-cap-2',
+    name: 'Huile Capillaire Fortifiante & Croissance',
+    slug: 'huile-capillaire-fortifiante-croissance',
+    description: 'Bain d’huile précieux aux actifs stimulants (ricin noir, romarin, avocat, menthe poivrée) favorisant la microcirculation et l’épaississement de la fibre.',
+    category_id: 'soins-capillaires',
+    category_name: 'Soins capillaires',
+    price: 8500,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-6.jpg',
+      '/images/editorial/cat-soins-capillaires.jpg',
+    ],
+    stock_quantity: 40,
+    is_featured: true,
+    is_new: false,
+    is_active: true,
+    benefits: [
+      'Booste la pousse et densifie les zones clairsemées (tempes, bordures)',
+      'Scelle l’hydratation dans les pointes sèches',
+      'Texture fluide qui ne laisse pas de résidus lourds',
+    ],
+    usage: 'Massez quelques gouttes sur le cuir chevelu 3 fois par semaine. Idéal en scellage d’hydratation ou en bain d’huile tiède avant shampoing.',
+    volume_or_size: '100 ml',
+    rating: 4.9,
+  },
+  {
+    id: 'prod-cap-3',
+    name: 'Shampooing Doux Hydratation Ultime Sans Sulfates',
+    slug: 'shampooing-doux-hydratation-ultime-sans-sulfates',
+    description: 'Une mousse onctueuse et bienveillante qui débarrasse les cheveux des impuretés et excès de sébum sans les décaper ni agresser le cuir chevelu sensible.',
+    category_id: 'soins-capillaires',
+    category_name: 'Soins capillaires',
+    price: 8000,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-7.jpg',
+      '/images/editorial/cat-soins-capillaires.jpg',
+    ],
+    stock_quantity: 25,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Nettoie en douceur sans décaper le sébum naturel',
+      'Facilite le démêlage dès la première application',
+      'Sans sulfates agressifs, sans silicones, sans parabènes',
+    ],
+    usage: 'Faire mousser sur cuir chevelu mouillé en massant du bout des doigts, étirer sur les longueurs puis rincer.',
+    volume_or_size: '250 ml',
+    rating: 4.8,
+  },
+  {
+    id: 'prod-cap-4',
+    name: 'Baume Nutrition Intense Cheveux Secs',
+    slug: 'baume-nutrition-intense-cheveux-secs',
+    description: 'Un beurre fouetté onctueux pour nourrir en profondeur les textures crépues, frisées et très sèches.',
+    category_id: 'soins-capillaires',
+    category_name: 'Soins capillaires',
+    price: 9500,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-8.jpg',
+      '/images/editorial/cat-soins-capillaires.jpg',
+    ],
+    stock_quantity: 20,
+    is_featured: false,
+    is_new: false,
+    is_active: true,
+    benefits: [
+      'Gaine la fibre capillaire pour empêcher la casse',
+      'Apporte une brillance soyeuse et durable',
+      'Excellent pour les nattes protectrices et vanilles',
+    ],
+    usage: 'Prélever une noisette, chauffer entre les paumes et répartir sur les longueurs et pointes.',
+    volume_or_size: '200 g',
+    rating: 4.9,
+  },
+
+  // PERRUQUES & MÈCHES
+  {
+    id: 'prod-perr-1',
+    name: 'Perruque HD Lace Frontal Deep Wave Raw Hair',
+    slug: 'perruque-hd-lace-frontal-deep-wave-raw-hair',
+    description: 'Une perruque somptueuse confectionnée à partir de cheveux 100% bruts (Raw Hair). Ondulations profondes, brillance naturelle et tulle HD ultra-fine invisible sur toutes les carnations.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 85000,
+    sale_price: 79000,
+    images: [
+      '/images/products/client-product-9.jpg',
+      '/images/editorial/cat-perruques.jpg',
+    ],
+    stock_quantity: 8,
+    is_featured: true,
+    is_new: false,
+    is_active: true,
+    benefits: [
+      'Dentelle HD transparente indétectable',
+      'Cheveux 100% vierges humains pouvant être colorés et lissés',
+      'Densité 180% pour un volume luxueux et naturel',
+      'Bordures pré-plumées avec baby hairs délicats',
+    ],
+    usage: 'À poser avec ou sans colle grâce aux sangles ajustables et peignes de maintien intégrés.',
+    volume_or_size: 'Longueur 24 pouces · Densité 180%',
+    rating: 5.0,
+  },
+  {
+    id: 'prod-perr-2',
+    name: 'Lot de 3 Boules Mèches Vierges Straight Silky',
+    slug: 'lot-3-boules-meches-vierges-straight-silky',
+    description: 'Des mèches lisses soyeuses d’une qualité d’exception. Pleines jusqu’aux pointes, sans frisottis et résistantes au fer à lisser.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 45000,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-10.jpg',
+      '/images/editorial/cat-perruques.jpg',
+    ],
+    stock_quantity: 14,
+    is_featured: true,
+    is_new: false,
+    is_active: true,
+    benefits: [
+      'Cheveux humains vierges de qualité grade 12A',
+      'Sans enchevêtrement ni perte de matière',
+      'Supporte les décolorations jusqu’au blond platine 613',
+    ],
+    usage: 'Idéal pour tissages ou confection de perruques personnalisées.',
+    volume_or_size: 'Pack 3 paquets · 18, 20, 22 pouces',
+    rating: 4.9,
+  },
+  {
+    id: 'prod-perr-3',
+    name: 'Perruque Bob Glueless HD Lace Prêt-à-Porter',
+    slug: 'perruque-bob-glueless-hd-lace',
+    description: 'Le carré court moderne et sophistiqué par excellence. Conception sans colle (glueless), prête à enfiler en 30 secondes pour une allure impeccable.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 65000,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-11.jpg',
+      '/images/editorial/cat-perruques.jpg',
+    ],
+    stock_quantity: 10,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Pose ultra rapide sans aucune colle ni gel adhésif',
+      'Coupe au carré nette et mouvement fluide naturel',
+      'Élastique de maintien ajustable pour un confort absolu',
+    ],
+    usage: 'Ajuster l’élastique intérieur, positionner sur la tête et apprécier le tombé parfait.',
+    volume_or_size: 'Longueur 12 pouces · Coupe Bob chic',
+    rating: 4.9,
+  },
+  {
+    id: 'prod-perr-4',
+    name: 'Closure HD 5x5 Curls Divine',
+    slug: 'closure-hd-5x5-curls-divine',
+    description: 'Finition closure haute définition 5x5 avec boucles rebondies et naturelles pour compléter vos tissages avec discrétion.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 28000,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-12.jpg',
+      '/images/editorial/cat-perruques.jpg',
+    ],
+    stock_quantity: 12,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Tulle HD ultra fine et douce sur la peau',
+      'Permet plusieurs raies de coiffage (milieu ou côté)',
+      'Nœuds décolorés pour un effet cuir chevelu réaliste',
+    ],
+    usage: 'À coudre ou coller en finition sur un tissage ou une perruque.',
+    volume_or_size: 'Dimension 5x5 pouces · Longueur 16 pouces',
+    rating: 4.8,
+  },
+
+  // ACCESSOIRES
+  {
+    id: 'prod-acc-1',
+    name: 'Bonnet de Nuit en Soie Pure Double Face NYDA',
+    slug: 'bonnet-de-nuit-soie-pure-nyda',
+    description: 'L’accessoire indispensable pour protéger vos cheveux et vos perruques des frottements d’oreiller, préserver l’hydratation et éviter la casse pendant la nuit.',
+    category_id: 'accessoires',
+    category_name: 'Accessoires',
+    price: 7000,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-13.jpg',
+      '/images/editorial/cat-soins-capillaires.jpg',
+    ],
+    stock_quantity: 35,
+    is_featured: false,
+    is_new: false,
+    is_active: true,
+    benefits: [
+      '100% soie de mûrier hypoallergénique',
+      'Bande élastique douce qui ne serre pas le front et ne marque pas la peau',
+      'Conserve le brushing et les boucles plusieurs jours',
+    ],
+    usage: 'Glissez vos cheveux ou votre perruque à l’intérieur avant de vous coucher.',
+    volume_or_size: 'Taille universelle ajustable · Coloris Blush / Noir',
+    rating: 5.0,
+  },
+  // COMPLÉMENTS DE COLLECTION — PHOTOS NYDA
+  {
+    id: 'prod-cap-5',
+    name: 'Kit de Coloration Loutre — Noir Intense',
+    slug: 'kit-coloration-loutre-noir-intense',
+    description: 'Kit de coloration capillaire Loutre pour un noir profond et uniforme, avec après-shampoing réparateur pour préserver la fibre.',
+    category_id: 'soins-capillaires',
+    category_name: 'Soins capillaires',
+    price: 6500,
+    sale_price: null,
+    images: ['/images/products/client-product-15.jpg'],
+    stock_quantity: 22,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: ['Couverture complète des cheveux gris', 'Teinte noir intense longue durée', 'Après-shampoing nourrissant inclus'],
+    usage: 'Suivre le mode d’emploi du kit, appliquer sur cheveux secs et laisser poser le temps indiqué avant rinçage.',
+    volume_or_size: 'Kit complet',
+    rating: 4.7,
+  },
+  {
+    id: 'prod-cap-6',
+    name: 'Lotion Capillaire Alfas Texture Soie',
+    slug: 'lotion-capillaire-alfas-texture-soie',
+    description: 'Lotion capillaire Alfas pour assouplir et revitaliser les cheveux, facile à appliquer au quotidien.',
+    category_id: 'soins-capillaires',
+    category_name: 'Soins capillaires',
+    price: 5500,
+    sale_price: null,
+    images: ['/images/products/client-product-16.jpg'],
+    stock_quantity: 30,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: ['Assouplit la fibre capillaire', 'Facilite le coiffage et le démêlage', 'Laisse une texture douce et soyeuse'],
+    usage: 'Appliquer sur cheveux propres et humides, répartir uniformément puis coiffer comme souhaité.',
+    volume_or_size: 'Flacon',
+    rating: 4.6,
+  },
+  {
+    id: 'prod-cap-7',
+    name: 'Shampooing Réparateur Dexe Black Shampoo',
+    slug: 'shampooing-reparateur-dexe-black',
+    description: 'Shampooing noir Dexe formulé pour renforcer et embellir les cheveux, avec un effet brillance immédiat.',
+    category_id: 'soins-capillaires',
+    category_name: 'Soins capillaires',
+    price: 8000,
+    sale_price: null,
+    images: ['/images/products/client-product-17.jpg'],
+    stock_quantity: 26,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: ['Renforce la fibre et limite la casse', 'Apporte une brillance naturelle', 'Nettoie en douceur le cuir chevelu'],
+    usage: 'Mouiller les cheveux, appliquer le shampooing en massant le cuir chevelu puis rincer abondamment.',
+    volume_or_size: 'Flacon',
+    rating: 4.8,
+  },
+  {
+    id: 'prod-cap-8',
+    name: 'Masque Kératine Réparateur Intense',
+    slug: 'masque-keratine-reparateur-intense',
+    description: 'Masque capillaire à la kératine pour réparer les cheveux abîmés, restaurer la douceur et apporter une brillance durable.',
+    category_id: 'soins-capillaires',
+    category_name: 'Soins capillaires',
+    price: 9500,
+    sale_price: 8500,
+    images: ['/images/products/client-product-18.jpg'],
+    stock_quantity: 18,
+    is_featured: true,
+    is_new: true,
+    is_active: true,
+    benefits: ['Répare les cheveux fragilisés', 'Apporte souplesse et brillance', 'Réduit les frisottis'],
+    usage: 'Appliquer sur cheveux humides après le shampooing, laisser poser 10 à 15 minutes puis rincer.',
+    volume_or_size: 'Pot',
+    rating: 4.9,
+  },
+  {
+    id: 'prod-perr-5',
+    name: 'Gel Coiffant Kinki Trendy Colors',
+    slug: 'gel-coiffant-kinki-trendy-colors',
+    description: 'Gel coiffant Kinki pour définir et fixer les boucles tout en apportant une brillance éclatante aux cheveux colorés.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 7000,
+    sale_price: null,
+    images: ['/images/products/client-product-19.jpg'],
+    stock_quantity: 24,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: ['Définit et fixe les boucles', 'Brillance durable sans résidus', 'Convient aux cheveux colorés'],
+    usage: 'Appliquer une petite quantité sur cheveux humides, répartir puis laisser sécher ou diffuser.',
+    volume_or_size: 'Tube',
+    rating: 4.7,
+  },
+  {
+    id: 'prod-perr-6',
+    name: 'Mèches Outre Bouncy Twist — Teintes Naturelles',
+    slug: 'meches-outre-bouncy-twist',
+    description: 'Mèches Outre Bouncy Twist pour des twists rebondis et naturels, disponibles en plusieurs teintes.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 12000,
+    sale_price: null,
+    images: ['/images/products/client-product-20.jpg'],
+    stock_quantity: 16,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: ['Boucles rebondies et naturelles', 'Plusieurs teintes disponibles', 'Idéal pour twists et coiffures protectrices'],
+    usage: 'Utiliser pour réaliser des twists ou des tresses protectrices sur cheveux naturels.',
+    volume_or_size: 'Pack',
+    rating: 4.8,
+  },
+  {
+    id: 'prod-acc-2',
+    name: 'Brosse Démêlante Ergonomique Luxury Detangler',
+    slug: 'brosse-demelante-ergonomique-luxury',
+    description: 'Brosse à picots souples à double hauteur pour démêler en douceur les cheveux crépus, bouclés, mouillés ainsi que les extensions sans arracher la matière.',
+    category_id: 'accessoires',
+    category_name: 'Accessoires',
+    price: 5500,
+    sale_price: null,
+    images: [
+      '/images/products/client-product-14.jpg',
+      '/images/editorial/cat-soins-capillaires.jpg',
+    ],
+    stock_quantity: 28,
+    is_featured: false,
+    is_new: false,
+    is_active: true,
+    benefits: [
+      'Démêle sans douleur et réduit la casse de 80%',
+      'Poignée ergonomique luxueuse au fini mat soft-touch',
+      'Idéale sous la douche avec un après-shampoing',
+    ],
+    usage: 'Commencez toujours le brossage par les pointes puis remontez progressivement vers les racines.',
+    volume_or_size: 'Finition noir mat & monogramme doré',
+    rating: 4.9,
+  },
+];
+
+export async function getProducts(options?: {
+  category?: ProductCategory;
+  featuredOnly?: boolean;
+  newOnly?: boolean;
+}): Promise<Product[]> {
+  const supabase = getSupabase();
+  if (supabase) {
+    try {
+      let query = supabase.from('products').select('*').eq('is_active', true);
+      if (options?.category) {
+        query = query.eq('category_id', options.category);
+      }
+      if (options?.featuredOnly) {
+        query = query.eq('is_featured', true);
+      }
+      if (options?.newOnly) {
+        query = query.eq('is_new', true);
+      }
+      const { data, error } = await query;
+      if (!error && data && data.length > 0) {
+        return data as Product[];
+      }
+    } catch {
+      // Fallback to local catalog
+    }
+  }
+
+  // Fallback to rich embedded catalog
+  let filtered = [...INITIAL_PRODUCTS];
+  if (options?.category) {
+    filtered = filtered.filter((p) => p.category_id === options.category);
+  }
+  if (options?.featuredOnly) {
+    filtered = filtered.filter((p) => p.is_featured);
+  }
+  if (options?.newOnly) {
+    filtered = filtered.filter((p) => p.is_new);
+  }
+  return filtered;
+}
+
+export async function getProductBySlug(slug: string): Promise<Product | null> {
+  const products = await getProducts();
+  return products.find((p) => p.slug === slug) || null;
+}

@@ -1,0 +1,28 @@
+# Next.js
+.next/
+.next_tmp_*/
+out/
+build/
+dist/
+
+# Internal workspace notes
+.workbuddy-ai/
+
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS
+.DS_Store
+Thumbs.db
