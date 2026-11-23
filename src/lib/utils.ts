@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { CartItem, CheckoutFormData } from '@/types';
+import { BRAND_CONFIG } from '@/lib/constants';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -16,6 +17,57 @@ export function formatPriceFCFA(amount: number): string {
     maximumFractionDigits: 0,
   }).format(amount);
   return `${formatted} FCFA`;
+}
+
+/**
+ * Un prix à 0 signifie « prix non encore communiqué par la boutique ».
+ * Aucun prix fictif n'est jamais affiché pour ces références.
+ */
+type PriceableProduct = {
+  price: number;
+  sale_price?: number | null;
+};
+
+export function getEffectivePrice(product: PriceableProduct): number | null {
+  const value = product.sale_price ?? product.price;
+  return typeof value === 'number' && value > 0 ? value : null;
+}
+
+export function hasPrice(product: PriceableProduct): boolean {
+  return getEffectivePrice(product) !== null;
+}
+
+export function formatProductPrice(product: PriceableProduct): string {
+  const price = getEffectivePrice(product);
+  return price === null ? 'Prix sur demande' : formatPriceFCFA(price);
+}
+
+export function hasUnpricedItems(items: { product: PriceableProduct }[]): boolean {
+  return items.some((item) => !hasPrice(item.product));
+}
+
+/**
+ * Lien WhatsApp pour demander le prix d'un article non encore tarifé.
+ */
+export function getProductInquiryUrl(product: { name: string }): string {
+  const message = encodeURIComponent(
+    `Bonjour NYDA BEAUTY HAIR, je souhaite connaître le prix de l'article "${product.name}". Merci.`
+  );
+  return `https://wa.me/${BRAND_CONFIG.whatsappPhone}?text=${message}`;
+}
+
+/**
+ * Lien WhatsApp pour demander le prix de plusieurs articles non tarifés.
+ */
+export function getCartPriceInquiryUrl(items: CartItem[]): string {
+  const lines = items
+    .filter((item) => !hasPrice(item.product))
+    .map((item) => `- ${item.product.name} (x${item.quantity})`)
+    .join('\n');
+  const message = encodeURIComponent(
+    `Bonjour NYDA BEAUTY HAIR, je souhaite connaître le prix des articles suivants :\n${lines}\nMerci.`
+  );
+  return `https://wa.me/${BRAND_CONFIG.whatsappPhone}?text=${message}`;
 }
 
 /**
@@ -51,13 +103,17 @@ export function formatWhatsAppMessage(params: {
     mtn_money: 'MTN Mobile Money',
   };
 
+  const pendingPrices = hasUnpricedItems(items);
+
   const itemsList = items
-    .map(
-      (item, idx) =>
-        `${idx + 1}. *${item.product.name}* (x${item.quantity}) — ${formatPriceFCFA(
-          (item.product.sale_price ?? item.product.price) * item.quantity
-        )}`
-    )
+    .map((item, idx) => {
+      const unitPrice = getEffectivePrice(item.product);
+      const linePrice =
+        unitPrice === null
+          ? 'Prix sur demande'
+          : formatPriceFCFA(unitPrice * item.quantity);
+      return `${idx + 1}. *${item.product.name}* (x${item.quantity}) — ${linePrice}`;
+    })
     .join('\n');
 
   const text = `*NOUVELLE COMMANDE NYDA BEAUTY HAIR* ✨
@@ -73,10 +129,10 @@ ${customer.deliveryNotes ? `📝 *Précisions :* ${customer.deliveryNotes}\n` : 
 ${itemsList}
 
 -----------------------------------------
-• Sous-total : ${formatPriceFCFA(subtotal)}
+• Sous-total : ${pendingPrices ? 'À confirmer par NYDA' : formatPriceFCFA(subtotal)}
 • Livraison : ${deliveryFee === 0 ? 'Offerte' : formatPriceFCFA(deliveryFee)}
-*TOTAL À RÉGLER : ${formatPriceFCFA(total)}*
------------------------------------------
+*TOTAL À RÉGLER : ${pendingPrices ? 'À confirmer par NYDA' : formatPriceFCFA(total)}*
+${pendingPrices ? '⚠️ Certains articles sont affichés « Prix sur demande » : merci de me confirmer leur tarif avant validation.\n' : ''}-----------------------------------------
 
 _Bonjour NYDA BEAUTY HAIR, je souhaite finaliser ma commande passée sur la boutique en ligne. Merci de me confirmer la prise en charge et le délai de livraison._`;
 

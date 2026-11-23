@@ -3,6 +3,7 @@
 .next_tmp_*/
 .next_old/
 .next_stale/
+.next_stale_*/
 out/
 build/
 dist/
@@ -30,3 +31,5 @@ yarn-error.log*
 # OS
 .DS_Store
 Thumbs.db
+
+.vercel

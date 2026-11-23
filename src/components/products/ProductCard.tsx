@@ -4,9 +4,10 @@ import React from 'react';
 import Image from 'next/image';
 import { Eye, Plus, Check } from 'lucide-react';
 import { Product } from '@/types';
-import { formatPriceFCFA } from '@/lib/utils';
+import { formatPriceFCFA, formatProductPrice, getProductInquiryUrl, hasPrice } from '@/lib/utils';
 import { useCart } from '@/lib/cart-context';
 import Badge from '@/components/ui/Badge';
+import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 
 interface ProductCardProps {
   product: Product;
@@ -20,14 +21,18 @@ export default function ProductCard({
   const { addItem, openQuickView } = useCart();
   const [isAdded, setIsAdded] = React.useState(false);
 
+  const isPriced = hasPrice(product);
+  const inquiryUrl = getProductInquiryUrl(product);
+
   const handleAddToCart = (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (!isPriced) return;
     addItem(product, 1);
     setIsAdded(true);
     setTimeout(() => setIsAdded(false), 1800);
   };
 
-  const hasDiscount = product.sale_price && product.sale_price < product.price;
+  const hasDiscount = isPriced && product.sale_price && product.sale_price < product.price;
 
   return (
     <div
@@ -72,24 +77,37 @@ export default function ProductCard({
           <Eye className="w-4 h-4" />
         </button>
 
-        {/* Bottom Quick Add overlay button on hover */}
+        {/* Bottom Quick Add / Price Inquiry overlay on hover */}
         <div className="absolute inset-x-2.5 bottom-2.5 z-10 hidden sm:block opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-          <button
-            onClick={handleAddToCart}
-            className="w-full bg-[#1E1D1B] text-white hover:bg-[#393431] active:scale-[0.98] py-2.5 px-3 rounded-[3px] text-[11px] font-sans font-medium tracking-wider uppercase transition-all flex items-center justify-center gap-1.5 shadow-md"
-          >
-            {isAdded ? (
-              <>
-                <Check className="w-3.5 h-3.5 text-[#FCDFE1]" />
-                <span>Ajouté au panier</span>
-              </>
-            ) : (
-              <>
-                <Plus className="w-3.5 h-3.5" />
-                <span>Ajouter au panier</span>
-              </>
-            )}
-          </button>
+          {isPriced ? (
+            <button
+              onClick={handleAddToCart}
+              className="w-full bg-[#1E1D1B] text-white hover:bg-[#393431] active:scale-[0.98] py-2.5 px-3 rounded-[3px] text-[11px] font-sans font-medium tracking-wider uppercase transition-all flex items-center justify-center gap-1.5 shadow-md"
+            >
+              {isAdded ? (
+                <>
+                  <Check className="w-3.5 h-3.5 text-[#FCDFE1]" />
+                  <span>Ajouté au panier</span>
+                </>
+              ) : (
+                <>
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Ajouter au panier</span>
+                </>
+              )}
+            </button>
+          ) : (
+            <a
+              href={inquiryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="w-full bg-[#25D366] text-white hover:bg-[#20ba5a] active:scale-[0.98] py-2.5 px-3 rounded-[3px] text-[11px] font-sans font-medium tracking-wider uppercase transition-all flex items-center justify-center gap-1.5 shadow-md"
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 text-white" />
+              <span>Demander le prix</span>
+            </a>
+          )}
         </div>
       </div>
 
@@ -107,7 +125,7 @@ export default function ProductCard({
         <div className="mt-3 pt-2.5 border-t border-[#E9DFD9]/50 flex items-center justify-between">
           <div className="flex items-baseline gap-2">
             <span className="text-xs sm:text-sm font-semibold text-[#1E1D1B]">
-              {formatPriceFCFA(product.sale_price ?? product.price)}
+              {formatProductPrice(product)}
             </span>
             {hasDiscount && (
               <span className="text-[11px] text-[#8A7168] line-through">
@@ -116,18 +134,31 @@ export default function ProductCard({
             )}
           </div>
 
-          {/* Mobile direct add icon */}
-          <button
-            onClick={handleAddToCart}
-            className="sm:hidden p-1.5 rounded-full bg-[#F8F4F0] text-[#1E1D1B] active:bg-[#1E1D1B] active:text-white transition-colors"
-            aria-label="Ajouter au panier"
-          >
-            {isAdded ? (
-              <Check className="w-3.5 h-3.5 text-green-600" />
-            ) : (
-              <Plus className="w-3.5 h-3.5" />
-            )}
-          </button>
+          {/* Mobile direct add / price inquiry icon */}
+          {isPriced ? (
+            <button
+              onClick={handleAddToCart}
+              className="sm:hidden p-1.5 rounded-full bg-[#F8F4F0] text-[#1E1D1B] active:bg-[#1E1D1B] active:text-white transition-colors"
+              aria-label="Ajouter au panier"
+            >
+              {isAdded ? (
+                <Check className="w-3.5 h-3.5 text-green-600" />
+              ) : (
+                <Plus className="w-3.5 h-3.5" />
+              )}
+            </button>
+          ) : (
+            <a
+              href={inquiryUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={(e) => e.stopPropagation()}
+              className="sm:hidden p-1.5 rounded-full bg-[#25D366] text-white transition-colors"
+              aria-label={`Demander le prix de ${product.name}`}
+            >
+              <WhatsAppIcon className="w-3.5 h-3.5 text-white" />
+            </a>
+          )}
         </div>
       </div>
     </div>

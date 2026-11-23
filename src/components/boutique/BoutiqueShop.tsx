@@ -6,6 +6,7 @@ import { Product, ProductCategory } from '@/types';
 import ProductGrid from '@/components/products/ProductGrid';
 import Button from '@/components/ui/Button';
 import { BRAND_CONFIG } from '@/lib/constants';
+import { getEffectivePrice } from '@/lib/utils';
 
 type FilterKey = 'tous' | 'nouveautes' | 'coups-de-coeur' | ProductCategory;
 
@@ -17,6 +18,7 @@ const FILTERS: { key: FilterKey; label: string }[] = [
   { key: 'nouveautes', label: 'Nouveautés' },
   { key: 'soins-capillaires', label: 'Soins capillaires' },
   { key: 'perruques-meches', label: 'Perruques & mèches' },
+  { key: 'accessoires', label: 'Accessoires' },
 ];
 
 const SORTS: { key: SortKey; label: string }[] = [
@@ -69,10 +71,16 @@ export default function BoutiqueShop({ products, initialCategory = 'tous' }: Bou
     list = [...list];
     switch (sort) {
       case 'price-asc':
-        list.sort((a, b) => (a.sale_price ?? a.price) - (b.sale_price ?? b.price));
-        break;
       case 'price-desc':
-        list.sort((a, b) => (b.sale_price ?? b.price) - (a.sale_price ?? a.price));
+        // Les articles « Prix sur demande » restent toujours en fin de liste.
+        list.sort((a, b) => {
+          const priceA = getEffectivePrice(a);
+          const priceB = getEffectivePrice(b);
+          if (priceA === null && priceB === null) return a.name.localeCompare(b.name, 'fr');
+          if (priceA === null) return 1;
+          if (priceB === null) return -1;
+          return sort === 'price-asc' ? priceA - priceB : priceB - priceA;
+        });
         break;
       case 'name':
         list.sort((a, b) => a.name.localeCompare(b.name, 'fr'));

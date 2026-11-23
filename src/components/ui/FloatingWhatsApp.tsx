@@ -16,7 +16,7 @@ export default function FloatingWhatsApp() {
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Contacter NYDA BEAUTY HAIR sur WhatsApp"
-      className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 bg-[#25D366] text-white px-4 py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group"
+      className="fixed bottom-6 left-5 sm:left-auto sm:right-6 z-40 flex items-center gap-2.5 bg-[#25D366] text-white px-3.5 py-3 sm:px-4 sm:py-3 rounded-full shadow-lg hover:shadow-xl hover:scale-105 active:scale-95 transition-all duration-300 group"
     >
       <WhatsAppIcon className="w-5 h-5 text-white" />
       <span className="text-xs font-medium tracking-wider uppercase hidden sm:inline-block">

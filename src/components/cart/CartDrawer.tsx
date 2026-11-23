@@ -4,7 +4,12 @@ import React from 'react';
 import Image from 'next/image';
 import { X, Trash2, Plus, Minus, ArrowRight, ShoppingBag } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
-import { formatPriceFCFA } from '@/lib/utils';
+import {
+  formatPriceFCFA,
+  formatProductPrice,
+  hasPrice,
+  hasUnpricedItems,
+} from '@/lib/utils';
 import Button from '@/components/ui/Button';
 
 export default function CartDrawer() {
@@ -21,6 +26,8 @@ export default function CartDrawer() {
   } = useCart();
 
   if (!isCartOpen) return null;
+
+  const pendingPrices = hasUnpricedItems(items);
 
   return (
     <div className="fixed inset-0 z-50 overflow-hidden animate-fade-in">
@@ -73,8 +80,10 @@ export default function CartDrawer() {
               </div>
             ) : (
               items.map((item) => {
-                const unitPrice =
-                  item.product.sale_price ?? item.product.price;
+                const isPriced = hasPrice(item.product);
+                const unitPrice = isPriced
+                  ? item.product.sale_price ?? item.product.price
+                  : 0;
                 return (
                   <div
                     key={item.product.id}
@@ -97,7 +106,7 @@ export default function CartDrawer() {
                         {item.product.name}
                       </h4>
                       <p className="text-xs font-semibold text-[#1E1D1B] mt-1">
-                        {formatPriceFCFA(unitPrice)}
+                        {formatProductPrice(item.product)}
                       </p>
 
                       {/* Quantity Controls */}
@@ -144,7 +153,9 @@ export default function CartDrawer() {
 
                     <div className="text-right">
                       <span className="text-xs sm:text-sm font-semibold text-[#1E1D1B]">
-                        {formatPriceFCFA(unitPrice * item.quantity)}
+                        {isPriced
+                          ? formatPriceFCFA(unitPrice * item.quantity)
+                          : 'Prix sur demande'}
                       </span>
                     </div>
                   </div>
@@ -160,7 +171,7 @@ export default function CartDrawer() {
                 <div className="flex justify-between">
                   <span>Sous-total</span>
                   <span className="font-medium text-[#1E1D1B]">
-                    {formatPriceFCFA(subtotal)}
+                    {pendingPrices ? 'À confirmer par NYDA' : formatPriceFCFA(subtotal)}
                   </span>
                 </div>
                 <div className="flex justify-between">
@@ -175,7 +186,12 @@ export default function CartDrawer() {
                     )}
                   </span>
                 </div>
-                {deliveryFee > 0 && (
+                {pendingPrices && (
+                  <p className="text-[11px] text-[#8A7168]">
+                    Certains articles sont en « Prix sur demande ». Le montant final sera confirmé par NYDA BEAUTY HAIR sur WhatsApp.
+                  </p>
+                )}
+                {deliveryFee > 0 && !pendingPrices && (
                   <p className="text-[11px] text-[#8A7168]">
                     Plus que{' '}
                     <strong className="text-[#1E1D1B]">
@@ -186,7 +202,9 @@ export default function CartDrawer() {
                 )}
                 <div className="flex justify-between text-sm font-bold text-[#1E1D1B] pt-2 border-t border-[#E9DFD9]">
                   <span>Total</span>
-                  <span>{formatPriceFCFA(total)}</span>
+                  <span>
+                    {pendingPrices ? 'À confirmer par NYDA' : formatPriceFCFA(total)}
+                  </span>
                 </div>
               </div>
 

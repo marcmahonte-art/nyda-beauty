@@ -31,8 +31,12 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const isActive = (href: string) =>
-    href === '/' ? pathname === '/' : !href.includes('#') && pathname.startsWith(href);
+  const isActive = (href: string) => {
+    const currentPath = pathname ?? '';
+    return href === '/'
+      ? currentPath === '/'
+      : !href.includes('#') && currentPath.startsWith(href);
+  };
 
   // Sur l'accueil, l'en-tête se fond dans la photographie du hero tant que la
   // page n'est pas défilée : une seule surface ivoire, comme la référence.
@@ -45,7 +49,13 @@ export default function Header() {
 
   return (
     <>
-      <AnnouncementBar />
+      {isHome ? (
+        <div className="hidden lg:block">
+          <AnnouncementBar />
+        </div>
+      ) : (
+        <AnnouncementBar />
+      )}
 
       <header
         className={`sticky top-0 z-40 w-full transition-[background-color,box-shadow,border-color] duration-300 ${
@@ -56,7 +66,7 @@ export default function Header() {
               : 'border-b border-transparent bg-[#F8F4F0]'
         }`}
       >
-        <div className="mx-auto flex h-[68px] w-full max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:grid lg:h-[84px] lg:grid-cols-[1fr_auto_1fr] lg:px-12 xl:px-16">
+        <div className="mx-auto flex h-[88px] w-full max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:grid lg:h-[84px] lg:grid-cols-[1fr_auto_1fr] lg:px-12 xl:px-16">
           {/* Logo officiel — fichier source, proportions préservées */}
           <Link
             href="/"
@@ -69,7 +79,7 @@ export default function Header() {
               width={503}
               height={420}
               priority
-              className="h-[52px] w-auto sm:h-14 lg:h-[72px]"
+              className="h-[72px] w-auto lg:h-[72px]"
             />
           </Link>
 

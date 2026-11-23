@@ -1,100 +1,208 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 /**
- * Hero éditorial — « The Art of Beauty »
+ * Hero éditorial mobile-first — reproduit fidèlement l'image de référence :
+ * - Fond ivoire satin pleine largeur
+ * - Titre Playfair "L'ART DE" (obsidian) / "LA BEAUTÉ." (rose accent) + point noir
+ * - Accroche Playfair
+ * - Boutons capsule (pill) pleine largeur
+ * - Photo équipe pleine largeur sans carte ni border-radius
+ * - Signature éditoriale centrée en bas
  *
- * Composition de référence : texte à gauche sur fond ivoire, photographie de
- * l'équipe (quatre femmes) à droite, drapés de satin rose poudré. La photo
- * remonte sous l'en-tête transparent pour former une seule surface continue.
- * Tous les textes restent du HTML accessible et éditable.
+ * Sur desktop : composition split (texte gauche, photo droite).
  */
 export default function HeroSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const img = el.querySelector<HTMLElement>('[data-parallax]');
+      if (img && window.innerWidth >= 1024) {
+        img.style.transform = `translateY(${window.scrollY * 0.08}px)`;
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <section aria-labelledby="hero-title" className="relative w-full bg-[#F8F4F0]">
-      {/*
-        Desktop : le panneau remonte de 84 px sous l'en-tête (transparent sur
-        l'accueil) et sa hauteur est plafonnée au format 16/9 de la photo afin
-        de ne jamais recadrer les quatre portraits.
-      */}
-      <div className="relative mx-auto w-full max-w-[1440px] overflow-hidden pb-[78vw] sm:pb-[440px] lg:-mt-[84px] lg:h-[calc(100svh-33px)] lg:max-h-[min(56.25vw,810px)] lg:min-h-[560px] lg:pb-0">
-        {/* Photographie de marque — asset officiel, proportions préservées */}
-        <div className="absolute inset-x-0 bottom-0 h-[78vw] sm:h-[440px] lg:inset-0 lg:h-full">
+    <section
+      ref={sectionRef}
+      aria-labelledby="hero-title"
+      className="relative w-full bg-[#F8F4F0]"
+    >
+      {/* =========================================================
+          MOBILE layout (< lg) — colonne : texte → photo → signature
+          ========================================================= */}
+      <div className="relative lg:hidden">
+        {/* Satin rose de la référence, derrière la zone éditoriale */}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[620px] sm:h-[680px]">
+          <Image
+            src="/images/hero/nyda-satin-ivory.webp"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-right-top"
+          />
+        </div>
+
+        {/* Zone texte */}
+        <div className="relative px-5 pt-8 pb-8 sm:px-8">
+          {/* Titre principal */}
+          <h1
+            id="hero-title"
+            className="font-display font-normal uppercase leading-[0.92] tracking-[-0.01em] text-[#1E1D1B]"
+            style={{ fontSize: 'clamp(48px, 13vw, 72px)' }}
+          >
+            <span className="block">THE ART OF</span>
+            <span className="block">
+              <span className="text-[#D98F91]">BEAUTY</span>
+              <span className="text-[#1E1D1B]">.</span>
+            </span>
+          </h1>
+
+          {/* Diviseur */}
+          <span aria-hidden="true" className="mt-5 block h-[1.5px] w-10 bg-[#D98F91]/70" />
+
+          {/* Accroche */}
+          <p className="mt-5 font-display text-[21px] leading-[1.35] font-normal text-[#393431] sm:text-[24px]">
+            Révélez votre beauté.<br />
+            Sublimez votre élégance.
+          </p>
+
+          {/* Boutons capsule — largeur maîtrisée comme dans la maquette */}
+          <div className="mt-7 flex w-full max-w-[300px] flex-col gap-3">
+            <Link
+              href="/boutique"
+              className="group flex h-[50px] w-full items-center justify-center gap-2 rounded-full bg-[#1E1D1B] px-6 font-sans text-[11px] font-semibold tracking-[0.08em] uppercase text-white transition-colors duration-300 hover:bg-[#393431]"
+            >
+              EXPLORER LA BOUTIQUE
+              <ArrowRight
+                aria-hidden="true"
+                className="h-4 w-4 stroke-[1.5] transition-transform duration-300 group-hover:translate-x-1"
+              />
+            </Link>
+
+            <Link
+              href="/#categories"
+              className="flex h-[50px] w-full items-center justify-center rounded-full border border-[#1E1D1B] bg-transparent px-6 font-sans text-[11px] font-semibold tracking-[0.08em] uppercase text-[#1E1D1B] transition-colors duration-300 hover:bg-[#1E1D1B] hover:text-white"
+            >
+              DÉCOUVRIR NOS COLLECTIONS
+            </Link>
+          </div>
+        </div>
+
+        {/* Photo équipe — recadrage mobile dédié, quatre visages visibles */}
+        <div className="relative w-full" style={{ aspectRatio: '1.03 / 1' }}>
+          <Image
+            src="/images/hero/nyda-hero-team-mobile.webp"
+            alt="Quatre femmes de l'équipe NYDA BEAUTY HAIR portant différentes coiffures tressées."
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
+
+        {/* Signature éditoriale mobile */}
+        <div className="flex flex-col items-center gap-1.5 bg-[#F8F4F0] px-5 py-7">
+          <div className="flex w-full items-center gap-3">
+            <span aria-hidden="true" className="h-px flex-1 bg-[#E9DFD9]" />
+            <span className="whitespace-nowrap font-sans text-[11px] font-semibold tracking-[0.26em] uppercase text-[#1E1D1B]">
+              NYDA BEAUTY HAIR
+            </span>
+            <span aria-hidden="true" className="h-px flex-1 bg-[#E9DFD9]" />
+          </div>
+          <span className="font-sans text-[10px] font-medium tracking-[0.22em] uppercase text-[#8A7168]">
+            — BEAUTY ESSENTIALS —
+          </span>
+        </div>
+      </div>
+
+      {/* =========================================================
+          DESKTOP layout (>= lg) — split : texte gauche / photo droite
+          ========================================================= */}
+      <div className="relative mx-auto hidden w-full max-w-[1440px] overflow-hidden lg:block lg:-mt-[84px] lg:h-[calc(100svh-33px)] lg:max-h-[min(56.25vw,810px)] lg:min-h-[560px]">
+        {/* Photographie positionnée à droite */}
+        <div data-parallax className="absolute inset-0">
           <Image
             src="/images/hero/nyda-hero-team.webp"
-            alt="Quatre femmes de l’équipe NYDA BEAUTY HAIR portant différentes coiffures tressées, en tenues blanches."
+            alt="Quatre femmes de l'équipe NYDA BEAUTY HAIR portant différentes coiffures tressées, en tenues blanches."
             fill
             priority
             sizes="(min-width: 1440px) 1440px, 100vw"
             className="object-cover object-right lg:object-right-top"
           />
-          {/* Fondu ivoire : raccord doux entre le texte et la photo en version empilée */}
+          {/* Fondu ivoire à gauche pour lisibilité du texte */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#F8F4F0] to-transparent sm:h-20 lg:hidden"
+            className="pointer-events-none absolute inset-y-0 left-0 w-[55%] bg-gradient-to-r from-[#F8F4F0] via-[#F8F4F0]/80 to-transparent"
           />
         </div>
 
-        {/* Contenu éditorial */}
-        <div className="relative z-10 flex flex-col px-5 pt-8 pb-10 sm:px-8 sm:pt-10 lg:h-full lg:justify-start lg:px-12 lg:pt-[104px] lg:pb-10 xl:px-16 xl:pt-[140px]">
-          <div className="max-w-[440px] lg:max-w-[340px] xl:max-w-[470px]">
+        {/* Contenu éditorial desktop */}
+        <div className="relative z-10 flex h-full flex-col justify-start px-12 pt-[104px] pb-10 xl:px-16 xl:pt-[140px]">
+          <div className="max-w-[400px] xl:max-w-[480px]">
             <h1
               id="hero-title"
-              className="font-display text-[38px] leading-[0.94] font-normal tracking-[-0.015em] text-[#1E1D1B] uppercase sm:text-[54px] md:text-[58px] lg:text-[44px] xl:text-[clamp(64px,5.5vw,80px)]"
+              className="font-display font-normal uppercase leading-[0.9] tracking-[-0.015em] text-[#1E1D1B] lg:text-[52px] xl:text-[clamp(64px,5.5vw,82px)]"
             >
-              <span className="block">L&apos;art de</span>
+              <span className="block">THE ART OF</span>
               <span className="block">
-                <span className="text-[#B99C91]">la beauté</span>
+                <span className="text-[#B99C91]">BEAUTY</span>
                 <span className="text-[#1E1D1B]">.</span>
               </span>
             </h1>
 
-            <p className="mt-5 font-display text-[24px] leading-[1.3] text-[#393431] sm:mt-6 sm:text-[28px] lg:mt-5 lg:text-[21px] xl:mt-6 xl:text-[clamp(26px,2.5vw,36px)]">
+            <p className="mt-6 font-display text-[22px] leading-[1.35] text-[#393431] xl:text-[clamp(24px,2.2vw,32px)]">
               Révélez votre beauté.
               <br />
               Sublimez votre élégance.
             </p>
 
-            <span
-              aria-hidden="true"
-              className="mt-6 block h-px w-14 bg-[#B99C91]/70 sm:mt-7 lg:mt-5 xl:mt-7"
-            />
+            <span aria-hidden="true" className="mt-6 block h-px w-12 bg-[#B99C91]/70" />
 
-            <p className="mt-5 max-w-[400px] font-sans text-[15px] leading-[1.75] text-[#8A7168] sm:mt-6 lg:mt-4 lg:text-[14px] lg:leading-[1.65] xl:mt-6 xl:text-base xl:leading-[1.75]">
+            <p className="mt-5 max-w-[380px] font-sans text-[14px] leading-[1.75] text-[#8A7168] xl:text-[15px]">
               Découvrez notre sélection de soins, cosmétiques et essentiels capillaires pensés
               pour révéler votre beauté au quotidien.
             </p>
 
-            {/* Actions — Primary Obsidian / Outline Obsidian */}
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center lg:mt-6 lg:flex-col lg:items-stretch xl:mt-9 xl:flex-row xl:items-center">
+            {/* Boutons desktop */}
+            <div className="mt-8 flex flex-col gap-3 xl:flex-row xl:items-center xl:gap-4">
               <Link
                 href="/boutique"
-                className="group inline-flex h-[52px] items-center justify-center gap-3 rounded-[4px] bg-[#1E1D1B] px-6 font-sans text-[11px] font-medium tracking-[0.06em] whitespace-nowrap text-white uppercase transition-colors duration-300 hover:bg-[#393431] focus-visible:ring-2 focus-visible:ring-[#1E1D1B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F4F0] focus-visible:outline-none active:bg-black"
+                className="group inline-flex h-[52px] items-center justify-center gap-3 rounded-full bg-[#1E1D1B] px-8 font-sans text-[11px] font-semibold tracking-[0.07em] uppercase text-white transition-colors duration-300 hover:bg-[#393431]"
               >
-                <span>Explorer la boutique</span>
+                EXPLORER LA BOUTIQUE
                 <ArrowRight
                   aria-hidden="true"
-                  className="h-4 w-4 shrink-0 stroke-[1.5] transition-transform duration-300 group-hover:translate-x-1"
+                  className="h-4 w-4 stroke-[1.5] transition-transform duration-300 group-hover:translate-x-1"
                 />
               </Link>
 
               <Link
                 href="/#categories"
-                className="inline-flex h-[52px] items-center justify-center rounded-[4px] border border-[#1E1D1B] bg-transparent px-6 font-sans text-[11px] font-medium tracking-[0.06em] whitespace-nowrap text-[#1E1D1B] uppercase transition-colors duration-300 hover:bg-[#1E1D1B] hover:text-white focus-visible:ring-2 focus-visible:ring-[#1E1D1B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#F8F4F0] focus-visible:outline-none active:bg-black active:text-white"
+                className="inline-flex h-[52px] items-center justify-center rounded-full border border-[#1E1D1B] bg-transparent px-8 font-sans text-[11px] font-semibold tracking-[0.07em] uppercase text-[#1E1D1B] transition-colors duration-300 hover:bg-[#1E1D1B] hover:text-white"
               >
-                Découvrir nos collections
+                DÉCOUVRIR NOS COLLECTIONS
               </Link>
             </div>
           </div>
         </div>
 
-        {/* Signature éditoriale basse — desktop large uniquement */}
-        <div className="absolute bottom-8 left-12 z-10 hidden w-[420px] items-center gap-4 xl:left-16 xl:flex">
+        {/* Signature éditoriale desktop */}
+        <div className="absolute bottom-8 left-12 z-10 flex w-[420px] items-center gap-4 xl:left-16">
           <span aria-hidden="true" className="h-px flex-1 bg-[#E9DFD9]" />
           <span className="font-sans text-[10.5px] font-medium tracking-[0.22em] whitespace-nowrap text-[#8A7168] uppercase">
-            NYDA Beauty Hair — Beauty Essentials
+            NYDA BEAUTY HAIR — BEAUTY ESSENTIALS
           </span>
           <span aria-hidden="true" className="h-px flex-1 bg-[#E9DFD9]" />
         </div>

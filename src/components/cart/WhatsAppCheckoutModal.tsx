@@ -5,7 +5,13 @@ import { X, CheckCircle2, ShieldCheck, MapPin, Phone, User, CreditCard } from 'l
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useCart } from '@/lib/cart-context';
 import { CheckoutFormData, PaymentMethod } from '@/types';
-import { formatPriceFCFA, generateOrderRef, formatWhatsAppMessage } from '@/lib/utils';
+import {
+  formatPriceFCFA,
+  generateOrderRef,
+  formatWhatsAppMessage,
+  getCartPriceInquiryUrl,
+  hasUnpricedItems,
+} from '@/lib/utils';
 import { BRAND_CONFIG } from '@/lib/constants';
 import { getSupabase } from '@/lib/supabase';
 import Button from '@/components/ui/Button';
@@ -27,6 +33,8 @@ export default function WhatsAppCheckoutModal() {
 
   if (!isCheckoutOpen) return null;
 
+  const pendingPrices = hasUnpricedItems(items);
+
   const cities = [
     'Abidjan (Djorobité / Base CIE)',
     'Abidjan (Cocody / Angré)',
@@ -44,6 +52,14 @@ export default function WhatsAppCheckoutModal() {
     e.preventDefault();
     if (!formData.customerName || !formData.customerPhone || !formData.customerAddress) {
       alert('Veuillez renseigner vos coordonnées complètes pour la livraison.');
+      return;
+    }
+
+    // S'il reste des articles sans prix (panier hérité d'une ancienne version),
+    // on demande leur tarif au lieu d'envoyer une commande à 0 FCFA.
+    if (pendingPrices) {
+      window.open(getCartPriceInquiryUrl(items), '_blank');
+      closeCheckout();
       return;
     }
 
@@ -181,13 +197,19 @@ export default function WhatsAppCheckoutModal() {
                   {items.length} article{items.length > 1 ? 's' : ''} au panier
                 </p>
                 <p className="text-base font-bold text-[#1E1D1B] mt-0.5">
-                  Total : {formatPriceFCFA(total)}
+                  Total :{' '}
+                  {pendingPrices ? 'à confirmer par NYDA' : formatPriceFCFA(total)}
                 </p>
               </div>
               <span className="text-[11px] bg-[#FCDFE1] text-[#1E1D1B] px-2.5 py-1 rounded font-medium">
                 Paiement à la livraison
               </span>
             </div>
+            {pendingPrices && (
+              <p className="text-xs text-[#8A7168] bg-[#F8F4F0]/70 border border-[#E9DFD9]/70 rounded p-3">
+                Certains articles sont en « Prix sur demande ». Le bouton ci-dessous ouvrira une demande de tarif sur WhatsApp.
+              </p>
+            )}
 
             {/* Inputs */}
             <div className="space-y-4 text-left">
@@ -310,7 +332,11 @@ export default function WhatsAppCheckoutModal() {
                 className="gap-2 font-semibold"
               >
                 <WhatsAppIcon className="w-5 h-5 text-white" />
-                <span>Envoyer ma commande sur WhatsApp</span>
+                <span>
+                  {pendingPrices
+                    ? 'Demander les prix sur WhatsApp'
+                    : 'Envoyer ma commande sur WhatsApp'}
+                </span>
               </Button>
 
               <div className="flex items-center justify-center gap-2 text-[11px] text-[#8A7168]">

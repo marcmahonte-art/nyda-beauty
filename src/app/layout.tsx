@@ -9,6 +9,7 @@ import WhatsAppCheckoutModal from '@/components/cart/WhatsAppCheckoutModal';
 import ProductQuickView from '@/components/products/ProductQuickView';
 import SearchModal from '@/components/ui/SearchModal';
 import FloatingWhatsApp from '@/components/ui/FloatingWhatsApp';
+import BackToTop from '@/components/ui/BackToTop';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -85,6 +86,7 @@ export default function RootLayout({
           <ProductQuickView />
           <SearchModal />
           <FloatingWhatsApp />
+          <BackToTop />
         </CartProvider>
       </body>
     </html>

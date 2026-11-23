@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { CartItem, Product } from '@/types';
+import { getEffectivePrice, getProductInquiryUrl, hasPrice } from '@/lib/utils';
 
 interface CartContextType {
   items: CartItem[];
@@ -75,6 +76,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   }, [items, isInitialized]);
 
   const addItem = (product: Product, quantity: number = 1) => {
+    // Un article sans prix ne peut pas entrer dans un panier facturable :
+    // on ouvre plutôt une demande de tarif sur WhatsApp.
+    if (!hasPrice(product)) {
+      if (typeof window !== 'undefined') {
+        window.open(getProductInquiryUrl(product), '_blank');
+      }
+      return;
+    }
+
     setItems((prev) => {
       const existing = prev.find((item) => item.product.id === product.id);
       if (existing) {
@@ -112,8 +122,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const totalItems = items.reduce((acc, item) => acc + item.quantity, 0);
 
   const subtotal = items.reduce((acc, item) => {
-    const unitPrice = item.product.sale_price ?? item.product.price;
-    return acc + unitPrice * item.quantity;
+    const unitPrice = getEffectivePrice(item.product);
+    return unitPrice === null ? acc : acc + unitPrice * item.quantity;
   }, 0);
 
   const deliveryFee = subtotal === 0 || subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : STANDARD_DELIVERY_FEE;

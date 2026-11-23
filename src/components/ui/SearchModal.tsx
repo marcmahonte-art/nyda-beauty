@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Search, X, ArrowRight } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { INITIAL_PRODUCTS } from '@/lib/products';
-import { formatPriceFCFA } from '@/lib/utils';
+import { formatProductPrice } from '@/lib/utils';
 import { Product } from '@/types';
 
 export default function SearchModal() {
@@ -118,7 +118,7 @@ export default function SearchModal() {
                       {product.name}
                     </h4>
                     <p className="text-xs font-semibold text-[#1E1D1B] mt-0.5">
-                      {formatPriceFCFA(product.sale_price ?? product.price)}
+                      {formatProductPrice(product)}
                     </p>
                   </div>
                   <ArrowRight className="w-4 h-4 text-[#8A7168] opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />

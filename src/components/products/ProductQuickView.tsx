@@ -5,7 +5,12 @@ import Image from 'next/image';
 import { X, Check, Plus, Minus, Star } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/WhatsAppIcon';
 import { useCart } from '@/lib/cart-context';
-import { formatPriceFCFA } from '@/lib/utils';
+import {
+  formatPriceFCFA,
+  formatProductPrice,
+  getProductInquiryUrl,
+  hasPrice,
+} from '@/lib/utils';
 import { BRAND_CONFIG } from '@/lib/constants';
 import Button from '@/components/ui/Button';
 import Badge from '@/components/ui/Badge';
@@ -19,9 +24,12 @@ export default function ProductQuickView() {
   if (!quickViewProduct) return null;
 
   const product = quickViewProduct;
-  const hasDiscount = product.sale_price && product.sale_price < product.price;
+  const isPriced = hasPrice(product);
+  const hasDiscount = isPriced && product.sale_price && product.sale_price < product.price;
+  const inquiryUrl = getProductInquiryUrl(product);
 
   const handleAddToCart = () => {
+    if (!isPriced) return;
     addItem(product, quantity);
     setIsAdded(true);
     setTimeout(() => {
@@ -31,11 +39,15 @@ export default function ProductQuickView() {
   };
 
   const directWaMsg = encodeURIComponent(
-    `Bonjour NYDA BEAUTY HAIR, je souhaite commander l'article "${product.name}" au prix de ${formatPriceFCFA(
-      product.sale_price ?? product.price
-    )}.`
+    isPriced
+      ? `Bonjour NYDA BEAUTY HAIR, je souhaite commander l'article "${product.name}" au prix de ${formatPriceFCFA(
+          product.sale_price ?? product.price
+        )}.`
+      : `Bonjour NYDA BEAUTY HAIR, je souhaite connaître le prix de l'article "${product.name}". Merci.`
   );
-  const waUrl = `https://wa.me/${BRAND_CONFIG.whatsappPhone}?text=${directWaMsg}`;
+  const waUrl = isPriced
+    ? `https://wa.me/${BRAND_CONFIG.whatsappPhone}?text=${directWaMsg}`
+    : inquiryUrl;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-fade-in">
@@ -128,7 +140,7 @@ export default function ProductQuickView() {
             {/* Price */}
             <div className="flex items-baseline gap-3 my-4">
               <span className="font-sans text-2xl font-bold text-[#1E1D1B]">
-                {formatPriceFCFA(product.sale_price ?? product.price)}
+                {formatProductPrice(product)}
               </span>
               {hasDiscount && (
                 <span className="text-sm text-[#8A7168] line-through">
@@ -162,46 +174,52 @@ export default function ProductQuickView() {
 
           {/* Action Row */}
           <div className="pt-4 border-t border-[#E9DFD9] space-y-3">
-            <div className="flex items-center gap-4">
-              {/* Quantity selector */}
-              <div className="flex items-center border border-[#E9DFD9] rounded h-[50px] px-2 bg-[#F8F4F0]">
-                <button
-                  onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="p-1.5 text-[#1E1D1B] hover:text-[#8A7168] transition-colors"
-                  aria-label="Diminuer la quantité"
-                >
-                  <Minus className="w-3.5 h-3.5" />
-                </button>
-                <span className="w-10 text-center font-medium text-sm">
-                  {quantity}
-                </span>
-                <button
-                  onClick={() => setQuantity((q) => q + 1)}
-                  className="p-1.5 text-[#1E1D1B] hover:text-[#8A7168] transition-colors"
-                  aria-label="Augmenter la quantité"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                </button>
-              </div>
-
-              {/* Add to Cart button */}
-              <Button
-                variant="primary"
-                onClick={handleAddToCart}
-                className="flex-1"
-              >
-                {isAdded ? (
-                  <span className="inline-flex items-center gap-1.5">
-                    <Check className="w-4 h-4 text-[#FCDFE1]" />
-                    Ajouté au panier
+            {isPriced ? (
+              <div className="flex items-center gap-4">
+                {/* Quantity selector */}
+                <div className="flex items-center border border-[#E9DFD9] rounded h-[50px] px-2 bg-[#F8F4F0]">
+                  <button
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    className="p-1.5 text-[#1E1D1B] hover:text-[#8A7168] transition-colors"
+                    aria-label="Diminuer la quantité"
+                  >
+                    <Minus className="w-3.5 h-3.5" />
+                  </button>
+                  <span className="w-10 text-center font-medium text-sm">
+                    {quantity}
                   </span>
-                ) : (
-                  <span>Ajouter au panier</span>
-                )}
-              </Button>
-            </div>
+                  <button
+                    onClick={() => setQuantity((q) => q + 1)}
+                    className="p-1.5 text-[#1E1D1B] hover:text-[#8A7168] transition-colors"
+                    aria-label="Augmenter la quantité"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                  </button>
+                </div>
 
-            {/* Direct WhatsApp Order CTA */}
+                {/* Add to Cart button */}
+                <Button
+                  variant="primary"
+                  onClick={handleAddToCart}
+                  className="flex-1"
+                >
+                  {isAdded ? (
+                    <span className="inline-flex items-center gap-1.5">
+                      <Check className="w-4 h-4 text-[#FCDFE1]" />
+                      Ajouté au panier
+                    </span>
+                  ) : (
+                    <span>Ajouter au panier</span>
+                  )}
+                </Button>
+              </div>
+            ) : (
+              <p className="text-xs text-[#8A7168] bg-[#F8F4F0]/70 border border-[#E9DFD9]/70 rounded p-3">
+                Le prix de cet article sera communiqué prochainement. Contactez-nous pour le connaître et passer commande.
+              </p>
+            )}
+
+            {/* Direct WhatsApp order / price inquiry CTA */}
             <a
               href={waUrl}
               target="_blank"
@@ -209,7 +227,11 @@ export default function ProductQuickView() {
               className="w-full flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20ba5a] text-white py-3 px-4 rounded text-xs uppercase tracking-wider font-medium transition-colors"
             >
               <WhatsAppIcon className="w-4 h-4 text-white" />
-              <span>Commander directement via WhatsApp</span>
+              <span>
+                {isPriced
+                  ? 'Commander directement via WhatsApp'
+                  : 'Demander le prix via WhatsApp'}
+              </span>
             </a>
           </div>
         </div>

@@ -11,6 +11,7 @@ import Container from '@/components/ui/Container';
 import SectionHeading from '@/components/ui/SectionHeading';
 import ProductGrid from '@/components/products/ProductGrid';
 import { getProducts } from '@/lib/products';
+import { getEffectivePrice } from '@/lib/utils';
 
 export default async function HomePage() {
   const allProducts = await getProducts();
@@ -40,22 +41,28 @@ export default async function HomePage() {
     hasOfferCatalog: {
       '@type': 'OfferCatalog',
       name: 'Catalogue Beauté NYDA',
-      itemListElement: allProducts.map((p, index) => ({
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Product',
-          name: p.name,
-          description: p.description,
-          image: p.images[0],
-          offers: {
+      itemListElement: allProducts.flatMap((p, index) => {
+        const price = getEffectivePrice(p);
+        if (price === null) return [];
+        return [
+          {
             '@type': 'Offer',
-            price: p.sale_price ?? p.price,
-            priceCurrency: 'XOF',
-            availability: 'https://schema.org/InStock',
+            itemOffered: {
+              '@type': 'Product',
+              name: p.name,
+              description: p.description,
+              image: p.images[0],
+              offers: {
+                '@type': 'Offer',
+                price,
+                priceCurrency: 'XOF',
+                availability: 'https://schema.org/InStock',
+              },
+            },
+            position: index + 1,
           },
-        },
-        position: index + 1,
-      })),
+        ];
+      }),
     },
   };
 

@@ -25,6 +25,7 @@ export const metadata: Metadata = {
 const VALID_CATEGORIES: ProductCategory[] = [
   'soins-capillaires',
   'perruques-meches',
+  'accessoires',
 ];
 
 export default async function BoutiquePage({
