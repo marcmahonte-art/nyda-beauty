@@ -101,7 +101,7 @@ export default function HeroSection() {
         </div>
 
         {/* Photo équipe — recadrage mobile dédié, quatre visages visibles */}
-        <div className="relative w-full" style={{ aspectRatio: '1.03 / 1' }}>
+        <div className="relative w-full" style={{ aspectRatio: '1.13 / 1' }}>
           <Image
             src="/images/hero/nyda-hero-team-mobile.webp"
             alt="Quatre femmes de l'équipe NYDA BEAUTY HAIR portant différentes coiffures tressées."
