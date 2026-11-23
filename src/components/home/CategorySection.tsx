@@ -21,7 +21,7 @@ export default function CategorySection() {
       id: 'nouveautes',
       title: 'NOUVEAUTÉS',
       subtitle: 'Les dernières références de notre sélection.',
-      image: '/images/catalogue/produit-02.jpg',
+      image: '/images/catalogue/produit-02.webp',
       href: '#nouveautes',
       count: 'Fraîchement arrivé',
     },
