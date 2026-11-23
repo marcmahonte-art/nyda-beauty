@@ -119,7 +119,7 @@ export default function HeroSection() {
       {/* =========================================================
           DESKTOP layout (>= lg) — split : texte gauche / photo droite
           ========================================================= */}
-      <div className="relative mx-auto hidden w-full max-w-[1440px] overflow-hidden lg:block lg:-mt-[84px] lg:h-[calc(100svh-33px)] lg:max-h-[min(56.25vw,810px)] lg:min-h-[560px]">
+      <div className="relative mx-auto hidden w-full max-w-[1440px] overflow-hidden lg:block lg:-mt-[84px] lg:min-h-[660px] xl:min-h-[720px]">
         {/* Photographie positionnée à droite */}
         <div data-parallax className="absolute inset-0">
           <Image
@@ -138,12 +138,12 @@ export default function HeroSection() {
           />
         </div>
 
-        {/* Contenu éditorial desktop */}
-        <div className="relative z-10 flex h-full flex-col justify-start px-12 pt-[104px] pb-10 xl:px-16 xl:pt-[140px]">
-          <div className="max-w-[400px] xl:max-w-[480px]">
+        {/* Contenu éditorial desktop — flux vertical sans chevauchement */}
+        <div className="relative z-10 flex min-h-[660px] flex-col justify-between px-12 pt-[104px] pb-10 xl:min-h-[720px] xl:px-16 xl:pt-[124px]">
+          <div className="max-w-[420px] xl:max-w-[500px]">
             <h1
               id="hero-title"
-              className="font-display font-normal uppercase leading-[0.94] tracking-[-0.015em] text-[#1E1D1B] lg:text-[36px] xl:text-[clamp(42px,3.2vw,48px)]"
+              className="font-display font-normal uppercase leading-[0.94] tracking-[-0.015em] text-[#1E1D1B] lg:text-[40px] xl:text-[clamp(46px,3.8vw,62px)]"
             >
               <span className="block">Votre beauté,</span>
               <span className="block">
@@ -152,24 +152,24 @@ export default function HeroSection() {
               </span>
             </h1>
 
-            <p className="mt-6 font-display text-[22px] leading-[1.35] text-[#393431] xl:text-[clamp(24px,2.2vw,32px)]">
+            <p className="mt-5 font-display text-[20px] leading-[1.35] text-[#393431] xl:text-[clamp(22px,2vw,28px)]">
               Révélez votre beauté.
               <br />
               Sublimez votre élégance.
             </p>
 
-            <span aria-hidden="true" className="mt-6 block h-px w-12 bg-[#B99C91]/70" />
+            <span aria-hidden="true" className="mt-5 block h-px w-12 bg-[#B99C91]/70" />
 
-            <p className="mt-5 max-w-[380px] font-sans text-[14px] leading-[1.75] text-[#8A7168] xl:text-[15px]">
+            <p className="mt-4 max-w-[380px] font-sans text-[13.5px] leading-[1.7] text-[#8A7168] xl:text-[14.5px]">
               Découvrez notre sélection de soins, cosmétiques et essentiels capillaires pensés
               pour révéler votre beauté au quotidien.
             </p>
 
             {/* Boutons desktop */}
-            <div className="mt-8 flex flex-col gap-3 xl:flex-row xl:items-center xl:gap-4">
+            <div className="mt-7 flex flex-col gap-3 xl:flex-row xl:items-center xl:gap-4">
               <Link
                 href="/boutique"
-                className="group inline-flex h-[52px] items-center justify-center gap-3 rounded-full bg-[#1E1D1B] px-8 font-sans text-[11px] font-semibold tracking-[0.07em] uppercase text-white transition-colors duration-300 hover:bg-[#393431]"
+                className="group inline-flex h-[50px] items-center justify-center gap-3 rounded-full bg-[#1E1D1B] px-8 font-sans text-[11px] font-semibold tracking-[0.07em] uppercase text-white transition-colors duration-300 hover:bg-[#393431]"
               >
                 EXPLORER LA BOUTIQUE
                 <ArrowRight
@@ -180,21 +180,21 @@ export default function HeroSection() {
 
               <Link
                 href="/#categories"
-                className="inline-flex h-[52px] items-center justify-center rounded-full border border-[#1E1D1B] bg-transparent px-8 font-sans text-[11px] font-semibold tracking-[0.07em] uppercase text-[#1E1D1B] transition-colors duration-300 hover:bg-[#1E1D1B] hover:text-white"
+                className="inline-flex h-[50px] items-center justify-center rounded-full border border-[#1E1D1B] bg-transparent px-8 font-sans text-[11px] font-semibold tracking-[0.07em] uppercase text-[#1E1D1B] transition-colors duration-300 hover:bg-[#1E1D1B] hover:text-white"
               >
                 DÉCOUVRIR NOS COLLECTIONS
               </Link>
             </div>
           </div>
-        </div>
 
-        {/* Signature éditoriale desktop */}
-        <div className="absolute bottom-8 left-12 z-10 flex w-[420px] items-center gap-4 xl:left-16">
-          <span aria-hidden="true" className="h-px flex-1 bg-[#E9DFD9]" />
-          <span className="font-sans text-[10.5px] font-medium tracking-[0.22em] whitespace-nowrap text-[#8A7168] uppercase">
-            NYDA BEAUTY HAIR — BEAUTY ESSENTIALS
-          </span>
-          <span aria-hidden="true" className="h-px flex-1 bg-[#E9DFD9]" />
+          {/* Signature éditoriale desktop intégrée dans le flux (aucun risque de chevauchement) */}
+          <div className="mt-8 flex w-full max-w-[420px] items-center gap-4 pt-4">
+            <span aria-hidden="true" className="h-px flex-1 bg-[#E9DFD9]" />
+            <span className="font-sans text-[10.5px] font-medium tracking-[0.22em] whitespace-nowrap text-[#8A7168] uppercase">
+              NYDA BEAUTY HAIR — BEAUTY ESSENTIALS
+            </span>
+            <span aria-hidden="true" className="h-px flex-1 bg-[#E9DFD9]" />
+          </div>
         </div>
       </div>
     </section>
