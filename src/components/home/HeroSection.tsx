@@ -36,24 +36,12 @@ export default function HeroSection() {
     <section
       ref={sectionRef}
       aria-labelledby="hero-title"
-      className="relative w-full bg-[#F8F4F0]"
+      className="relative w-full bg-[#ffeee1]"
     >
       {/* =========================================================
           MOBILE layout (< lg) — colonne : texte → photo → signature
           ========================================================= */}
-      <div className="relative lg:hidden">
-        {/* Satin rose de la référence, derrière la zone éditoriale */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-[620px] sm:h-[680px]">
-          <Image
-            src="/images/hero/nyda-satin-ivory.webp"
-            alt=""
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-right-top"
-          />
-        </div>
-
+      <div className="relative bg-[#ffeee1] lg:hidden">
         {/* Zone texte */}
         <div className="relative px-5 pt-8 pb-8 sm:px-8">
           {/* Titre principal */}
@@ -113,7 +101,7 @@ export default function HeroSection() {
         </div>
 
         {/* Signature éditoriale mobile */}
-        <div className="flex flex-col items-center gap-1.5 bg-[#F8F4F0] px-5 py-7">
+        <div className="flex flex-col items-center gap-1.5 bg-[#ffeee1] px-5 py-7">
           <div className="flex w-full items-center gap-3">
             <span aria-hidden="true" className="h-px flex-1 bg-[#E9DFD9]" />
             <span className="whitespace-nowrap font-sans text-[11px] font-semibold tracking-[0.26em] uppercase text-[#1E1D1B]">
@@ -144,7 +132,7 @@ export default function HeroSection() {
           {/* Fondu ivoire à gauche pour lisibilité du texte */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-y-0 left-0 w-[55%] bg-gradient-to-r from-[#F8F4F0] via-[#F8F4F0]/80 to-transparent"
+            className="pointer-events-none absolute inset-y-0 left-0 w-[55%] bg-gradient-to-r from-[#ffeee1] via-[#ffeee1]/80 to-transparent"
           />
         </div>
 
