@@ -21,7 +21,7 @@ export default function CategorySection() {
       id: 'nouveautes',
       title: 'NOUVEAUTÉS',
       subtitle: 'Les dernières références de notre sélection.',
-      image: '/images/catalogue/produit-02.webp',
+      image: '/images/catalogue/aifasi-duo.webp',
       href: '#nouveautes',
       count: 'Fraîchement arrivé',
     },
@@ -66,6 +66,7 @@ export default function CategorySection() {
                   src={cat.image}
                   alt={cat.title}
                   fill
+                  quality={90}
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />

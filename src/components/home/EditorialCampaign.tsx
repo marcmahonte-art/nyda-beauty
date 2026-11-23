@@ -62,6 +62,7 @@ export default function EditorialCampaign() {
                 src="/images/editorial/campaign-model.jpg"
                 alt="Campagne Beauté NYDA — Votre beauté, votre signature"
                 fill
+                quality={90}
                 sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover object-top transform transition-transform duration-700 hover:scale-105"
               />

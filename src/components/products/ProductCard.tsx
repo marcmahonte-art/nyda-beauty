@@ -45,6 +45,7 @@ export default function ProductCard({
           src={product.images[0]}
           alt={product.name}
           fill
+          quality={85}
           sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           priority={priorityImage}
           className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"

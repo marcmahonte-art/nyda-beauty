@@ -1,8 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/image';
+import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Search, ShoppingBag, Menu, MessageCircle } from 'lucide-react';
 import { useCart } from '@/lib/cart-context';
 import { BRAND_CONFIG } from '@/lib/constants';
@@ -11,8 +12,10 @@ import AnnouncementBar from './AnnouncementBar';
 
 export default function Header() {
   const { totalItems, openCart, openSearch } = useCart();
+  const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const isTransparent = pathname === '/' && !isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,12 +31,13 @@ export default function Header() {
 
   const navLinks = [
     { label: 'ACCUEIL', href: '/' },
-    { label: 'SERVICES & TARIFS', href: '/services' },
-    { label: 'BOUTIQUE', href: '/#boutique' },
-    { label: 'COSMÉTIQUES', href: '/#cosmetiques' },
-    { label: 'SOINS CAPILLAIRES', href: '/#soins-capillaires' },
-    { label: 'PERRUQUES & MÈCHES', href: '/#perruques-meches' },
+    { label: 'BOUTIQUE', href: '/boutique' },
+    { label: 'NOS SERVICES', href: '/services' },
+    { label: 'LE SALON', href: '/salon' },
   ];
+
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   const waUrl = `https://wa.me/${BRAND_CONFIG.whatsappPhone}?text=${encodeURIComponent(
     'Bonjour NYDA BEAUTY HAIR, je souhaite des renseignements sur vos collections.'
@@ -51,7 +55,7 @@ export default function Header() {
               : 'border-b border-transparent bg-[#ffeee1]'
         }`}
       >
-        <div className="mx-auto flex h-[88px] w-full max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:grid lg:h-[84px] lg:grid-cols-[1fr_auto_1fr] lg:px-12 xl:px-16">
+        <div className="mx-auto flex h-[88px] w-full max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:grid lg:h-[84px] lg:grid-cols-[auto_1fr_auto] lg:px-12 xl:px-16">
           {/* Logo officiel — fichier source, proportions préservées */}
           <Link
             href="/"
@@ -68,43 +72,30 @@ export default function Header() {
             />
           </Link>
 
-          {/* Brand Official Logo (Left on desktop, Centered on mobile) */}
-          <div className="flex items-center">
-            <a
-              href="/"
-              className="flex items-center gap-3 group transition-transform hover:opacity-95"
-              aria-label="NYDA BEAUTY HAIR Accueil"
-            >
-              <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-[4px] overflow-hidden bg-[#1E1D1B] shadow-sm border border-[#393431]/30 shrink-0">
-                <Image
-                  src="/images/brand/nyda-logo-official.jpg"
-                  alt="NYDA BEAUTY HAIR Logo Officiel"
-                  fill
-                  className="object-contain p-0.5"
-                  priority
-                />
-              </div>
-              <div className="hidden sm:flex flex-col text-left">
-                <span className="font-display tracking-[0.18em] text-[15px] sm:text-[17px] font-semibold text-[#1E1D1B] leading-none uppercase">
-                  NYDA
-                </span>
-                <span className="font-sans text-[9px] tracking-[0.25em] text-[#8A7168] uppercase font-medium mt-1">
-                  BEAUTY HAIR
-                </span>
-              </div>
-            </a>
-          </div>
-
           {/* Desktop Navigation Links (Center) */}
-          <nav className="hidden lg:flex items-center gap-7 xl:gap-9">
+          <nav
+            aria-label="Navigation principale"
+            className="hidden lg:flex items-center justify-center gap-7 xl:gap-10"
+          >
             {navLinks.map((link) => (
-              <a
-                key={link.label}
+              <Link
+                key={link.href}
                 href={link.href}
-                className="text-[12px] xl:text-[13px] font-medium tracking-[0.06em] uppercase text-[#1E1D1B] hover:text-[#B99C91] transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-[1px] after:bg-[#1E1D1B] hover:after:w-full after:transition-all after:duration-300"
+                aria-current={isActive(link.href) ? 'page' : undefined}
+                className={`relative py-1 font-sans text-[12px] xl:text-[13px] uppercase tracking-[0.08em] transition-colors ${
+                  isActive(link.href)
+                    ? 'font-semibold text-[#1E1D1B]'
+                    : 'font-medium text-[#393431] hover:text-[#8A7168]'
+                }`}
               >
                 {link.label}
-              </a>
+                {isActive(link.href) && (
+                  <span
+                    aria-hidden="true"
+                    className="absolute inset-x-0 bottom-0 h-[2px] bg-[#FCDFE1]"
+                  />
+                )}
+              </Link>
             ))}
           </nav>
 
@@ -143,6 +134,18 @@ export default function Header() {
                   {totalItems}
                 </span>
               )}
+            </button>
+
+            {/* Mobile menu button */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Ouvrir le menu"
+              aria-controls="mobile-navigation"
+              aria-expanded={isMobileMenuOpen}
+              className="p-2 text-[#1E1D1B] hover:text-[#8A7168] hover:bg-black/5 rounded-full transition-colors lg:hidden"
+            >
+              <Menu className="w-5 h-5 stroke-[1.5]" />
             </button>
           </div>
         </div>

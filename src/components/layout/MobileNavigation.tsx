@@ -43,23 +43,15 @@ export default function MobileNavigation({
         <div>
           {/* Header */}
           <div className="flex items-center justify-between pb-6 border-b border-[#393431]">
-            <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded overflow-hidden bg-[#1E1D1B] border border-[#393431]">
-                <Image
-                  src="/images/brand/nyda-logo-official.jpg"
-                  alt="NYDA Logo"
-                  fill
-                  className="object-contain"
-                />
-              </div>
-              <div>
-                <p className="font-display text-sm tracking-[0.18em] font-medium uppercase">
-                  NYDA
-                </p>
-                <p className="text-[8px] tracking-[0.25em] text-[#8A7168] uppercase font-sans">
-                  BEAUTY HAIR
-                </p>
-              </div>
+            <div className="flex h-11 w-11 items-center justify-center rounded bg-[#F8F4F0] p-1">
+              <Image
+                src="/images/brand/nyda-logo-mark.png"
+                alt="NYDA BEAUTY HAIR"
+                width={503}
+                height={420}
+                priority
+                className="h-8 w-auto"
+              />
             </div>
             <button
               onClick={onClose}

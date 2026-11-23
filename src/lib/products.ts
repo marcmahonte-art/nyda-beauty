@@ -7,7 +7,9 @@ import { getSupabase } from './supabase';
  * Prix officiels : « Catalogue des Produits pRIX.pdf » (montants en FCFA)
  * Les images sont les visuels réels de la boutique, normalisés en 600×600 WebP
  * sur fond blanc à partir des fichiers HD de « produits/hd » (et de « produits »
- * pour Blue Magic, Ghost Bond XL et le trio de mousses).
+ * pour Blue Magic et Ghost Bond XL). Le visuel AiFaSi est le duo de mousses
+ * coiffantes fourni par la boutique. Les références 15–28 proviennent des
+ * catalogues transmis ensuite ; leurs prix restent à communiquer (price: 0).
  */
 export const INITIAL_PRODUCTS: Product[] = [
   // 01 — COLORATION
@@ -46,10 +48,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     category_name: 'Soins capillaires',
     price: 3000,
     sale_price: null,
-    images: [
-      '/images/catalogue/produit-02.webp',
-      '/images/catalogue/produit-02-2.webp',
-    ],
+    images: ['/images/catalogue/produit-02.webp'],
     stock_quantity: 28,
     is_featured: false,
     is_new: true,
@@ -568,6 +567,190 @@ export const INITIAL_PRODUCTS: Product[] = [
     ],
     usage: 'Usage strictement personnel. Désinfecter la tête à l’alcool à 70 % avant et après chaque utilisation. Ne pas utiliser sur une peau irritée ou lésée.',
     volume_or_size: '1 rouleau – 540 micro-aiguilles',
+  },
+
+  // 22 — OUTRÉ KITOKO TS (prix à communiquer par la boutique)
+  {
+    id: 'prod-22',
+    name: 'Outré Kitoko TS — Tissage & Extensions Lisses',
+    slug: 'outre-kitoko-ts',
+    description: 'Mèches à tisser et extensions lisses de texture souple Yaki, dotées de pointes légèrement recourbées vers l’intérieur. Disponibles en coloris unis et en dégradés Two-Tone à racines noires pour un rendu naturel et fluide.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 0,
+    sale_price: null,
+    images: [
+      '/images/catalogue/produit-22.webp',
+      '/images/catalogue/produit-22-2.webp',
+    ],
+    stock_quantity: 0,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Texture souple Yaki avec pointes recourbées vers l’intérieur',
+      'Coloris unis : #2 brun très foncé, #27 blond miel, #30 châtain cuivré',
+      'Ombrés Two-Tone : #1/27T, #1/30T et #1/33T à racines noires',
+      'Référence spécifique à la gamme Outré Africa',
+    ],
+    usage: 'Tisser les mèches sur des nattes plates ou les poser en extensions selon la technique choisie, puis coiffer avec des soins adaptés aux fibres synthétiques.',
+    volume_or_size: 'Tissage – 6 coloris (#2, #27, #30, #1/27T, #1/30T, #1/33T)',
+  },
+
+  // 23 — OUTRÉ KINKI (prix à communiquer par la boutique)
+  {
+    id: 'prod-23',
+    name: 'Outré Kinki — Mèches Afro Texturées',
+    slug: 'outre-kinki',
+    description: 'Mèches à texture afro conçues pour les vanilles, twists, crochet braids et coiffures protectrices volumineuses. Leur boucle généreuse apporte du volume et un rendu naturel dès la pose.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 0,
+    sale_price: null,
+    images: [
+      '/images/catalogue/produit-23.webp',
+      '/images/catalogue/produit-23-2.webp',
+    ],
+    stock_quantity: 0,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Texture afro pour vanilles, twists et crochet braids',
+      'Coloris : #1 noir, #2 brun foncé, #27 blond miel',
+      'Également disponible en #33 auburn, #39 bordeaux et #350 cuivré',
+      'Idéal pour les coiffures protectrices volumineuses',
+    ],
+    usage: 'Préparer des nattes ou des vanilles de base, puis installer les mèches au crochet ou les tresser selon la coiffure souhaitée.',
+    volume_or_size: '6 coloris (#1, #2, #27, #33, #39, #350)',
+  },
+
+  // 24 — OUTRÉ MEGA BRAID 100" (prix à communiquer par la boutique)
+  {
+    id: 'prod-24',
+    name: 'Outré Mega Braid 100" — Mèches à Tresser Extra-Longues',
+    slug: 'outre-mega-braid-100',
+    description: 'Mèches à tresser extra-longues de 100 pouces en fibre Kanekalon 100 %. Leur toucher extra doux et leur tressage fluide conviennent aux box braids, tresses collées et vanilles longues, avec finition à l’eau chaude.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 0,
+    sale_price: null,
+    images: ['/images/catalogue/produit-24.webp'],
+    stock_quantity: 0,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      '100 % fibre Kanekalon, toucher Extra Soft',
+      'Sans nœuds (Tangle Free) et tressage fluide (Easy Braiding)',
+      'Finition à l’eau chaude (Hot Water Set)',
+      'Longueur 100 pouces pour box braids et vanilles longues',
+    ],
+    usage: 'Tresser à la longueur souhaitée puis tremper les pointes dans l’eau chaude pour fixer la finition. Nouveauté de la gamme Outré Africa.',
+    volume_or_size: '100 pouces (254 cm) – noir',
+  },
+
+  // 25 — OUTRÉ DANIELA (prix à communiquer par la boutique)
+  {
+    id: 'prod-25',
+    name: 'Outré Daniela — Tissage Souple & Bouclé',
+    slug: 'outre-daniela',
+    description: 'Mèches à tisser et extensions souples offrant un volume naturel généreux, avec des pointes bouclées vers l’intérieur. Une référence propre au catalogue Outré Africa.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 0,
+    sale_price: null,
+    images: ['/images/catalogue/produit-25.webp'],
+    stock_quantity: 0,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Tissage souple au volume naturel',
+      'Pointes bouclées vers l’intérieur',
+      'Coloris #1 noir, #1/30T et #1/350T en dégradés',
+      'Référence exclusive au catalogue Outré Africa',
+    ],
+    usage: 'Poser sur des nattes plates ou en extensions, puis séparer les boucles à la main pour retrouver le volume souhaité.',
+    volume_or_size: '3 coloris (#1, #1/30T, #1/350T)',
+  },
+
+  // 26 — OUTRÉ BOUNCY TWIST (prix à communiquer par la boutique)
+  {
+    id: 'prod-26',
+    name: 'Outré Bouncy Twist — Mèches pour Twists & Crochet',
+    slug: 'outre-bouncy-twist',
+    description: 'Mèches texturées souples et rebondies, spécialement étudiées pour la réalisation de vanilles (twists) et de coiffures au crochet. Leur boucle dynamique donne du mouvement et du volume aux coiffures protectrices.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 0,
+    sale_price: null,
+    images: ['/images/catalogue/produit-26.webp'],
+    stock_quantity: 0,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Texture souple et rebondie, idéale pour les twists',
+      'Convient aux poses au crochet et aux coiffures protectrices',
+      'Coloris #1 noir, #30 châtain cuivré et #350 roux cuivré',
+      'Boucles dynamiques qui conservent leur forme',
+    ],
+    usage: 'Enrouler deux mèches pour former des twists ou les fixer au crochet sur des nattes préparées, puis entretenir avec une mousse légère.',
+    volume_or_size: '3 coloris (#1, #30, #350)',
+  },
+
+  // 27 — OUTRÉ KINKI NATURAL 20" (prix à communiquer par la boutique)
+  {
+    id: 'prod-27',
+    name: 'Outré Kinki Natural 20" — Texture Crépue Naturelle',
+    slug: 'outre-kinki-natural-20',
+    description: 'Mèches de 20 pouces à texture crépue naturelle, imitant le cheveu crépu brushé ou défrisé. Disponibles en coloris unis et en nuances ombrées pour un rendu proche du cheveu naturel.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 0,
+    sale_price: null,
+    images: [
+      '/images/catalogue/produit-27.webp',
+      '/images/catalogue/produit-27-2.webp',
+    ],
+    stock_quantity: 0,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Texture crépue naturelle, effet cheveu brushé ou défrisé',
+      'Longueur 20 pouces (51 cm)',
+      'Unis : #1 noir et #33 auburn foncé',
+      'Ombrés : #1/27T, #1/39T, #27/613T et #33/27',
+    ],
+    usage: 'Installer en tissage, au crochet ou en tresses selon la coiffure souhaitée, puis défroisser délicatement à la main ou avec un peigne à dents larges.',
+    volume_or_size: '20 pouces (51 cm) – 6 coloris',
+  },
+
+  // 28 — OUTRÉ 12X FRENCH CURL (prix à communiquer par la boutique)
+  {
+    id: 'prod-28',
+    name: 'Outré 12X French Curl — Mèches Pré-Bouclées',
+    slug: 'outre-12x-french-curl',
+    description: 'Mèches pré-bouclées en spirales souples aux pointes, destinées aux tresses bohèmes et aux French Curl Braids. Fibre synthétique effet cheveu naturel, légère et facile à démêler, avec tenue longue durée des boucles.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 0,
+    sale_price: null,
+    images: ['/images/catalogue/produit-28.webp'],
+    stock_quantity: 0,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Boucles anglaises préformées, prêtes à poser',
+      'Fibre synthétique effet cheveu naturel, légère',
+      'Démêlage facile et tenue des boucles Curl Endure',
+      'Conditionnement lot 12X pour un volume généreux',
+    ],
+    usage: 'Intégrer les mèches lors de la pose de tresses bohèmes ou de French Curl Braids, puis séparer les spirales à la main pour révéler les boucles.',
+    volume_or_size: 'Lot 12X – coloris #2, #33, #39',
   },
 ];
 

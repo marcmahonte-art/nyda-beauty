@@ -47,8 +47,8 @@ export default function HeroSection() {
           {/* Titre principal */}
           <h1
             id="hero-title"
-            className="font-display font-normal uppercase leading-[0.94] tracking-[-0.01em] text-[#1E1D1B]"
-            style={{ fontSize: 'clamp(38px, 10vw, 56px)' }}
+            className="font-display font-normal uppercase leading-[0.96] tracking-[-0.01em] text-[#1E1D1B]"
+            style={{ fontSize: 'clamp(32px, 8.8vw, 50px)' }}
           >
             <span className="block">Votre beauté,</span>
             <span className="block">
@@ -88,15 +88,16 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Photo équipe — recadrage mobile dédié, quatre visages visibles */}
-        <div className="relative w-full" style={{ aspectRatio: '1.13 / 1' }}>
+        {/* Photo équipe — recadrage HD mobile officiel, quatre visages nets et visibles */}
+        <div className="relative w-full" style={{ aspectRatio: '1.16 / 1' }}>
           <Image
             src="/images/hero/nyda-hero-team-mobile.webp"
             alt="Quatre femmes de l'équipe NYDA BEAUTY HAIR portant différentes coiffures tressées."
             fill
             priority
-            sizes="100vw"
-            className="object-cover object-center"
+            quality={95}
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover object-top"
           />
         </div>
 
@@ -126,6 +127,7 @@ export default function HeroSection() {
             alt="Quatre femmes de l'équipe NYDA BEAUTY HAIR portant différentes coiffures tressées, en tenues blanches."
             fill
             priority
+            quality={95}
             sizes="(min-width: 1440px) 1440px, 100vw"
             className="object-cover object-right lg:object-right-top"
           />
@@ -141,7 +143,7 @@ export default function HeroSection() {
           <div className="max-w-[400px] xl:max-w-[480px]">
             <h1
               id="hero-title"
-              className="font-display font-normal uppercase leading-[0.94] tracking-[-0.015em] text-[#1E1D1B] lg:text-[44px] xl:text-[clamp(52px,4.5vw,70px)]"
+              className="font-display font-normal uppercase leading-[0.94] tracking-[-0.015em] text-[#1E1D1B] lg:text-[36px] xl:text-[clamp(42px,3.2vw,48px)]"
             >
               <span className="block">Votre beauté,</span>
               <span className="block">
