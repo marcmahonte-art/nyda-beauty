@@ -33,7 +33,13 @@ export default function MobileNavigation({
       />
 
       {/* Drawer */}
-      <div className="fixed inset-y-0 left-0 w-full max-w-xs sm:max-w-sm bg-[#1E1D1B] text-white p-6 shadow-2xl flex flex-col justify-between overflow-y-auto animate-slide-right">
+      <div
+        id="mobile-navigation"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu de navigation"
+        className="fixed inset-y-0 left-0 w-full max-w-xs sm:max-w-sm bg-[#1E1D1B] text-white p-6 shadow-2xl flex flex-col justify-between overflow-y-auto animate-slide-right"
+      >
         <div>
           {/* Header */}
           <div className="flex items-center justify-between pb-6 border-b border-[#393431]">

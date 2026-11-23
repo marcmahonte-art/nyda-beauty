@@ -1,12 +1,16 @@
 # Next.js
 .next/
 .next_tmp_*/
+.next_old/
+.next_stale/
 out/
 build/
 dist/
 
-# Internal workspace notes
+# Internal workspace notes & temp
 .workbuddy-ai/
+.workbuddy/
+*.genie
 
 # Dependencies
 node_modules/
