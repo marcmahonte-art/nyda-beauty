@@ -1,0 +1,11 @@
+.next
+.next_*
+node_modules
+.git
+image nyda
+produits
+extracted_chat
+generated-images
+*.jfif
+*.png
+!public/**
