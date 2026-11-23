@@ -47,12 +47,12 @@ export default function HeroSection() {
           {/* Titre principal */}
           <h1
             id="hero-title"
-            className="font-display font-normal uppercase leading-[0.92] tracking-[-0.01em] text-[#1E1D1B]"
-            style={{ fontSize: 'clamp(48px, 13vw, 72px)' }}
+            className="font-display font-normal uppercase leading-[0.94] tracking-[-0.01em] text-[#1E1D1B]"
+            style={{ fontSize: 'clamp(38px, 10vw, 56px)' }}
           >
-            <span className="block">THE ART OF</span>
+            <span className="block">Votre beauté,</span>
             <span className="block">
-              <span className="text-[#D98F91]">BEAUTY</span>
+              <span className="text-[#D98F91]">notre signature</span>
               <span className="text-[#1E1D1B]">.</span>
             </span>
           </h1>
@@ -141,11 +141,11 @@ export default function HeroSection() {
           <div className="max-w-[400px] xl:max-w-[480px]">
             <h1
               id="hero-title"
-              className="font-display font-normal uppercase leading-[0.9] tracking-[-0.015em] text-[#1E1D1B] lg:text-[52px] xl:text-[clamp(64px,5.5vw,82px)]"
+              className="font-display font-normal uppercase leading-[0.94] tracking-[-0.015em] text-[#1E1D1B] lg:text-[44px] xl:text-[clamp(52px,4.5vw,70px)]"
             >
-              <span className="block">THE ART OF</span>
+              <span className="block">Votre beauté,</span>
               <span className="block">
-                <span className="text-[#B99C91]">BEAUTY</span>
+                <span className="text-[#B99C91]">notre signature</span>
                 <span className="text-[#1E1D1B]">.</span>
               </span>
             </h1>
