@@ -752,6 +752,59 @@ export const INITIAL_PRODUCTS: Product[] = [
     usage: 'Intégrer les mèches lors de la pose de tresses bohèmes ou de French Curl Braids, puis séparer les spirales à la main pour révéler les boucles.',
     volume_or_size: 'Lot 12X – coloris #2, #33, #39',
   },
+
+  // 29 — REMOVER FOR LACE WIG BOND & TOUPEE TAPE (prix à communiquer par la boutique)
+  {
+    id: 'prod-29',
+    name: 'Remover for Lace Wig Bond & Toupee Tape (Flacon Couronne)',
+    slug: 'remover-lace-wig-bond-toupee-tape-30ml',
+    description: 'Solvant liquide professionnel pour retirer les perruques frontales (lace wigs), postiches (toupees), bandes adhésives double-face (tape-in extensions) et colles capillaires sans abîmer le tulle ni arracher les cheveux naturels.',
+    category_id: 'perruques-meches',
+    category_name: 'Perruques & mèches',
+    price: 0,
+    sale_price: null,
+    images: ['/images/catalogue/produit-29.webp'],
+    stock_quantity: 0,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Formule Jaune (étiquette orange) à action rapide',
+      'Formule Transparente (étiquette bleue) douce minimisant les résidus',
+      'Embout applicateur de précision (twist-top) pour cibler la bordure',
+      'Adapté aux cuirs chevelus sensibles, préserve le tulle et les cheveux',
+    ],
+    usage: 'Appliquer quelques gouttes le long de la bordure de la lace ou des bandes adhésives grâce à l’embout twist-top, laisser agir brièvement puis décoller délicatement et nettoyer les résidus.',
+    volume_or_size: '30 ml (1 fl oz)',
+  },
+
+  // 30 — AUNT JACKIE'S CURL LA LA DEFINING CURL CUSTARD (prix à communiquer par la boutique)
+  {
+    id: 'prod-30',
+    name: 'Aunt Jackie’s Curls & Coils — Curl La La Defining Curl Custard',
+    slug: 'aunt-jackies-curl-la-la-defining-curl-custard-426g',
+    description: 'Crème / gelée coiffante définissante et hydratante (Curl à la Crème) pour cheveux naturels bouclés, frisés, crépus ou ondulés. Enrichie en beurre de karité et en huile d’olive, sans sulfates, sans parabènes, sans huile minérale et sans pétrolatum.',
+    category_id: 'soins-capillaires',
+    category_name: 'Soins capillaires',
+    price: 0,
+    sale_price: null,
+    images: [
+      '/images/catalogue/produit-30.webp',
+      '/images/catalogue/produit-30-2.webp',
+    ],
+    stock_quantity: 0,
+    is_featured: false,
+    is_new: true,
+    is_active: true,
+    benefits: [
+      'Enrichie en beurre de karité (Shea Butter) et huile d’olive',
+      'Sans sulfates, sans parabènes, sans huile minérale ni pétrolatum',
+      'Définit, sculpte et contrôle boucles, spirales (coils) et braid-outs',
+      'Sans effet carton ni résidus blancs, élimine les frisottis',
+    ],
+    usage: 'Appliquer généreusement sur cheveux propres et humides, section par section, en travaillant des racines aux pointes pour définir les boucles ou réaliser un braid-out. Laisser sécher à l’air libre ou au diffuseur.',
+    volume_or_size: '426 g (15 oz)',
+  },
 ];
 
 export async function getProducts(options?: {
